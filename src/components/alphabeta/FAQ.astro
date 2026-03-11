@@ -1,0 +1,67 @@
+---
+const faqs = [
+  {
+    q: "商用利用はできますか",
+    a: "いいえ、現行規約では商用利用はできません。利用できるのは、個人による非商用での生成・SNS投稿の範囲です。販売、有料コンテンツ、広告収益付き投稿・動画、案件、企業・団体での利用などは商用に含まれます。ただし、内容によっては個別に許諾を検討する場合があります。希望される方は問い合わせ先をご確認ください。なお、必ず許可されるものではありません。"
+  },
+  {
+    q: "SNS投稿はできますか",
+    a: "はい、できます。個人による非商用の範囲で、生成した画像や動画をSNSに投稿できます。ハッシュタグ #αβlab を付けていただけると、企画の励みになります。"
+  },
+  {
+    q: "自分のキャラと一緒に使えますか",
+    a: "はい、使えます。あなたのオリジナルキャラクターと共演させたり、漫画や画像内で一緒に扱ったりして構いません。ただし、相手側のキャラクターや素材については、その権利や利用規約にも十分ご注意ください。"
+  },
+  {
+    q: "AI学習やLoRA化はできますか",
+    a: "いいえ、できません。再配布を目的としたモデル化・学習（LoRA・Checkpoint等）や、データセット化は禁止されています。"
+  },
+  {
+    q: "規約は今後更新されますか",
+    a: "更新される可能性があります。利用開始時点、またはダウンロード時点で公開されている最新版の規約が適用されます。"
+  },
+  {
+  q: "個別に『これは大丈夫ですか？』と質問できますか",
+  a: "非商用での通常利用については、公開しているガイドラインの内容が判断基準のすべてです。個別の可否判断や事前確認にはお答えしていません。ただし、商用利用を希望される場合は、別途許諾が必要です。内容に応じて個別相談を受ける場合があります。"
+}
+];
+---
+<section class="py-20 bg-brand-surface">
+  <div class="container mx-auto px-8 max-w-3xl">
+    <h2 class="text-sm font-bold tracking-[0.3em] uppercase text-brand-pink-accent/80 mb-12">Frequently Asked Questions</h2>
+    
+    <div x-data="{ active: null }" class="space-y-4">
+      {faqs.map((faq, index) => (
+        <div class="border border-brand-pink/20 rounded-2xl overflow-hidden bg-white/50 backdrop-blur-sm transition-all duration-300">
+          <button 
+            @click={`active = active === ${index} ? null : ${index}`}
+            class="w-full flex items-center justify-between p-6 text-left group"
+          >
+            <span class="text-lg font-serif font-bold text-gray-900 group-hover:text-brand-pink-accent transition-colors">
+              {faq.q}
+            </span>
+            <svg 
+              class="w-5 h-5 text-brand-pink-accent transition-transform duration-300" 
+              :class={`active === ${index} ? 'rotate-180' : ''`}
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          <div 
+            x-show={`active === ${index}`} 
+            x-collapse
+            class="px-6 pb-6"
+          >
+            <div class="pt-4 border-t border-brand-pink/10 text-brand-gray/70 leading-relaxed italic">
+              {faq.a}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

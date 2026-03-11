@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/alphabeta/Hero.astro';
+import Description from '../../components/alphabeta/Description.astro';
+import CharacterIntro from '../../components/alphabeta/CharacterIntro.astro';
+import Rules from '../../components/alphabeta/Rules.astro';
+import FAQ from '../../components/alphabeta/FAQ.astro';
+import Gallery from '../../components/alphabeta/Gallery.astro';
+import Media from '../../components/alphabeta/Media.astro';
+import CTA from '../../components/alphabeta/CTA.astro';
+---
+
+<Layout 
+  title="αβlab project | RHworks"
+  description="氷堂リョージによる、生成AIを安全に試行するためのオリジナルキャラクター配布企画「αβlab」。"
+>
+  <main>
+    <Hero />
+    <Description />
+    <CharacterIntro />
+    <Rules />
+    <FAQ />
+    <Gallery />
+    <Media />
+    <CTA />
+    
+    <footer class="py-16 bg-brand-beige border-t border-brand-pink/10 text-center">
+      <p class="text-[10px] tracking-[0.5em] text-brand-gray/40 uppercase">
+        &copy; {new Date().getFullYear()} RHworks Ryoji Hido
+      </p>
+    </footer>
+  </main>
+
+  <script is:inline src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</Layout>

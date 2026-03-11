@@ -1,0 +1,183 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout 
+  title="αβlab Usage Guidelines | RHworks"
+  description="αβlab projectの利用規約およびガイドライン。 / Usage guidelines for the αβlab project."
+>
+  <main class="max-w-4xl mx-auto px-8 py-20" x-data="{ lang: 'jp' }">
+    <!-- Header -->
+    <header class="mb-16">
+      <div class="flex items-center justify-between mb-8">
+        <a href="/alphabeta/" class="text-[10px] font-bold tracking-[0.2em] text-brand-pink-accent hover:text-brand-gray transition-colors uppercase flex items-center gap-2">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+          Back to αβlab
+        </a>
+        <div class="flex p-0.5 bg-brand-pink/10 rounded-full">
+          <button 
+            @click="lang = 'jp'" 
+            class="px-4 py-1.5 text-[10px] font-bold tracking-widest rounded-full transition-all"
+            :class="lang === 'jp' ? 'bg-white text-brand-pink-accent shadow-sm' : 'text-brand-gray/50 hover:text-brand-pink-accent'"
+          >JP</button>
+          <button 
+            @click="lang = 'en'" 
+            class="px-4 py-1.5 text-[10px] font-bold tracking-widest rounded-full transition-all"
+            :class="lang === 'en' ? 'bg-white text-brand-pink-accent shadow-sm' : 'text-brand-gray/50 hover:text-brand-pink-accent'"
+          >EN</button>
+        </div>
+      </div>
+
+      <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4 italic" x-text="lang === 'jp' ? 'αβ利用規約' : 'αβ Usage Guidelines'">
+        αβ利用規約
+      </h1>
+      <div class="flex flex-wrap gap-4 text-[10px] font-bold tracking-widest uppercase text-brand-gray/40">
+        <span>Version 1.1</span>
+        <span>/</span>
+        <span>Last Updated: 2025-12-13</span>
+      </div>
+    </header>
+
+    <!-- Navigation / Table of Contents -->
+    <nav class="mb-16 p-8 bg-brand-surface rounded-3xl border border-brand-pink/10">
+      <h2 class="text-sm font-bold tracking-[0.3em] uppercase text-brand-pink-accent/80 mb-6" x-text="lang === 'jp' ? '目次' : 'Table of Contents'">目次</h2>
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-serif italic text-brand-gray/80">
+        <li><a href="#summary" class="hover:text-brand-pink-accent transition-colors" x-text="lang === 'jp' ? '規約の概要' : 'Summary'">規約の概要</a></li>
+        <li><a href="#rules" class="hover:text-brand-pink-accent transition-colors" x-text="lang === 'jp' ? '詳細ルール (OK/NG)' : 'Detailed Rules'">詳細ルール (OK/NG)</a></li>
+        <li><a href="#commercial" class="hover:text-brand-pink-accent transition-colors" x-text="lang === 'jp' ? '商用利用の定義' : 'Commercial Use Definition'">商用利用の定義</a></li>
+        <li><a href="#rights" class="hover:text-brand-pink-accent transition-colors" x-text="lang === 'jp' ? '権利と免責事項' : 'Rights & Disclaimer'">権利と免責事項</a></li>
+      </ul>
+    </nav>
+
+    <!-- Content Sections -->
+    <div class="space-y-20 prose prose-stone max-w-none prose-headings:font-serif prose-headings:italic prose-p:font-serif prose-p:italic">
+      
+      <!-- Summary section -->
+      <section id="summary" class="scroll-mt-20">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6" x-text="lang === 'jp' ? '規約の概要' : 'Summary'">規約の概要</h2>
+        <div x-show="lang === 'jp'" class="space-y-4">
+          <p>
+            可否の判断は、本規約に記載された内容が基準です。<br />
+            非商用での通常利用については、規約に反していない限り自由にご利用いただけます。<br />
+            ※通常利用に関する個別の可否判断や事前確認にはお答えしておりません。<br />
+            ※商用利用を希望される場合は、別途許諾が必要です。内容に応じて個別相談を受ける場合があります。
+          </p>
+        </div>
+        <div x-show="lang === 'en'" class="space-y-4">
+          <p>
+            Decisions regarding permitted use are based on the contents of these guidelines.<br />
+            Standard non-commercial use is free as long as it does not violate the terms.<br />
+            *We do not respond to individual inquiries or requests for prior confirmation regarding standard use.<br />
+            *Separate permission is required for commercial use. We may consider individual consultations depending on the nature of the request.
+          </p>
+        </div>
+      </section>
+
+      <!-- Detailed Rules section -->
+      <section id="rules" class="scroll-mt-20">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6" x-text="lang === 'jp' ? '詳細ルール (OK/NG)' : 'Detailed Rules'">詳細ルール (OK/NG)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- OK -->
+          <div class="p-8 bg-green-50 rounded-3xl border border-green-100">
+            <h3 class="text-green-700 font-bold mb-4 flex items-center gap-2">
+              <span class="text-xl">✓</span> OK
+            </h3>
+            <ul x-show="lang === 'jp'" class="text-sm space-y-2 text-green-800/80">
+              <li>個人が生成AIに読み込ませて生成する（非商用）</li>
+              <li>生成した画像をSNSへ投稿する</li>
+              <li>非営利目的の二次創作・ファンアート</li>
+            </ul>
+            <ul x-show="lang === 'en'" class="text-sm space-y-2 text-green-800/80">
+              <li>Individuals using AI tools to generate images (Non-commercial)</li>
+              <li>Posting generated results on social media</li>
+              <li>Non-commercial fan art and derivative works</li>
+            </ul>
+          </div>
+          <!-- NG -->
+          <div class="p-8 bg-red-50 rounded-3xl border border-red-100">
+            <h3 class="text-red-700 font-bold mb-4 flex items-center gap-2">
+              <span class="text-xl">✕</span> NG
+            </h3>
+            <ul x-show="lang === 'jp'" class="text-sm space-y-2 text-red-800/80">
+              <li>公序良俗に反する利用、名誉毀損</li>
+              <li>作者偽装（αβを自作キャラとして公表）</li>
+              <li>差別・暴力・性的・政治目的の利用</li>
+              <li>素材そのものの再配布・転売</li>
+              <li>再配布目的のモデル化（LoRA等）やデータセット化</li>
+            </ul>
+            <ul x-show="lang === 'en'" class="text-sm space-y-2 text-red-800/80">
+              <li>Violating public order, morals, or reputation</li>
+              <li>Impersonation / Claiming character as your own</li>
+              <li>Discrimination, violence, sexual, or political use</li>
+              <li>Redistributing original distributed files</li>
+              <li>Creating models (LoRA, etc.) or datasets for redistribution</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Commercial Use section -->
+      <section id="commercial" class="scroll-mt-20">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6" x-text="lang === 'jp' ? '商用利用の定義' : 'Commercial Use Definition'">商用利用の定義</h2>
+        <div class="p-8 bg-brand-surface rounded-3xl border border-brand-pink/10">
+          <h4 class="text-sm font-bold uppercase tracking-widest text-brand-pink-accent mb-4" x-text="lang === 'jp' ? '商用とみなされる例' : 'Examples of Commercial Use'">商用とみなされる例</h4>
+          <ul x-show="lang === 'jp'" class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm text-brand-gray/80">
+            <li>・販売／有料コンテンツ</li>
+            <li>・広告収益（YouTube・ブログ・SNS等）</li>
+            <li>・案件／企業・団体での利用</li>
+            <li>・営利目的のあらゆるプロモーション</li>
+          </ul>
+          <ul x-show="lang === 'en'" class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm text-brand-gray/80">
+            <li>・Selling products or paid content</li>
+            <li>・Monetized posts/videos (YT, Blog, etc.)</li>
+            <li>・Commissioned work or corporate use</li>
+            <li>・Any for-profit promotional activity</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Rights and Disclaimer section -->
+      <section id="rights" class="scroll-mt-20">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6" x-text="lang === 'jp' ? '権利と免責事項' : 'Rights & Disclaimer'">権利と免責事項</h2>
+        <div x-show="lang === 'jp'" class="space-y-6 text-sm text-brand-gray/80">
+          <div class="space-y-2">
+            <h4 class="font-bold text-gray-900">著作権等</h4>
+            <p>生成物の著作権の有無・帰属は、法域や生成過程により異なります。原案者は保証しませんので、利用者の責任でご判断ください。</p>
+          </div>
+          <div class="space-y-2">
+            <h4 class="font-bold text-gray-900">権利留保</h4>
+            <p>αβの原案デザインに関する権利は、原案者（氷堂リョージ）に留保されます。</p>
+          </div>
+          <div class="space-y-2">
+            <h4 class="font-bold text-gray-900">免責事項</h4>
+            <p>利用により生じたトラブルについて、原案者は一切の責任を負いかねます。</p>
+          </div>
+        </div>
+        <div x-show="lang === 'en'" class="space-y-6 text-sm text-brand-gray/80">
+          <div class="space-y-2">
+            <h4 class="font-bold text-gray-900">Copyright</h4>
+            <p>Copyright status of generated works depends on laws and processes. The original creator makes no guarantees; please use at your own responsibility.</p>
+          </div>
+          <div class="space-y-2">
+            <h4 class="font-bold text-gray-900">Rights Observed</h4>
+            <p>All rights related to original designs are reserved by the original creator (Ryoji Hido).</p>
+          </div>
+          <div class="space-y-2">
+            <h4 class="font-bold text-gray-900">Disclaimer</h4>
+            <p>The original creator is not responsible for any disputes or damages arising from use.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Footer within main -->
+    <footer class="mt-32 pt-16 border-t border-brand-pink/20 text-center">
+      <p class="text-[10px] tracking-[0.5em] text-brand-gray/40 uppercase">
+        &copy; {new Date().getFullYear()} RHworks Ryoji Hido
+      </p>
+    </footer>
+  </main>
+
+  <script is:inline src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</Layout>

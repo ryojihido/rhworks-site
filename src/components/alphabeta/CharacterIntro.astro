@@ -1,0 +1,71 @@
+---
+const characters = [
+  { 
+    name: "キャラクター α（アルファ）", 
+    description: "「継承体AI」。天真爛漫、好奇心旺盛、元気。感情的。キョトンとした目。",
+    image: "/images/alphabeta/char_a.webp" 
+  },
+  { 
+    name: "キャラクター β（ベタ）", 
+    description: "「編纂体AI」。大人しそうに見えるが野心家。論理的でドライ。目は開かない。",
+    image: "/images/alphabeta/char_b.webp" 
+  }
+];
+---
+<section class="py-20 bg-brand-surface">
+  <div class="container mx-auto px-8 max-w-4xl">
+    <h2 class="text-sm font-bold tracking-[0.3em] uppercase text-brand-pink-accent/80 mb-12">Character Introduction</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {characters.map(char => (
+        <div class="group space-y-4">
+          <div class="aspect-[3/4] rounded-[2rem] bg-brand-pink/5 border border-brand-pink/10 overflow-hidden relative shadow-sm transition-all duration-500 group-hover:shadow-xl">
+            <img 
+              src={char.image} 
+              alt={char.name} 
+              class="w-full h-full object-cover grayscale brightness-110 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:brightness-100"
+            />
+            <div class="absolute inset-0 bg-brand-pink-accent/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500"></div>
+          </div>
+          <div class="px-4">
+            <h3 class="text-xl font-serif font-bold text-gray-900 mb-2 truncate group-hover:text-brand-pink-accent transition-colors">
+              {char.name}
+            </h3>
+            <p class="text-sm text-brand-gray/70 leading-relaxed italic">
+              {char.description}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Download Banner -->
+    <div class="mt-20">
+      <a 
+        href="/downloads/alphabeta/alphabeta-character-pack-v1.0.zip" 
+        download
+        class="group relative block p-8 md:p-12 overflow-hidden rounded-[2.5rem] bg-brand-gray text-brand-beige shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-brand-pink/20"
+      >
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-pink/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+        <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
+          <div class="space-y-2 text-center md:text-left">
+            <h3 class="text-2xl md:text-3xl font-serif font-bold italic tracking-tight">
+              Download alphabeta-character-pack-v1.0.zip
+            </h3>
+            <p class="text-brand-beige/50 text-xs tracking-[0.2em] uppercase font-bold">
+              Size: ~25MB / Format: PNG
+            </p>
+          </div>
+          <div class="flex items-center gap-4 px-8 py-4 bg-brand-beige text-brand-gray rounded-2xl font-bold text-xs tracking-[0.2em] uppercase transition-all duration-300 group-hover:bg-white group-hover:scale-105">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            Download Now
+          </div>
+        </div>
+      </a>
+      <p class="mt-6 text-[10px] text-brand-gray/40 text-center uppercase tracking-widest leading-relaxed">
+        ※ ダウンロードを開始することで、<a href="/alphabeta/guidelines/" class="text-brand-pink-accent hover:underline">利用規約</a>に同意したものとみなされます
+      </p>
+    </div>
+  </div>
+</section>

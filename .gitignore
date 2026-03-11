@@ -19,3 +19,7 @@ yarn-error.log*
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+# Local management files (Not for GitHub)
+AI_GUIDELINES.md
+DEPLOY_CHECKLIST.md
