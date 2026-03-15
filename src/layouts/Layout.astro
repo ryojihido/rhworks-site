@@ -5,6 +5,7 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+const socialImage = new URL('/og-image.webp', Astro.site ?? Astro.url).toString();
 ---
 
 <!doctype html>
@@ -25,14 +26,14 @@ const { title, description } = Astro.props;
 		<meta property="og:url" content={Astro.url} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content="/og-image.png" />
+		<meta property="og:image" content={socialImage} />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content={Astro.url} />
 		<meta property="twitter:title" content={title} />
 		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content="/og-image.png" />
+		<meta property="twitter:image" content={socialImage} />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,6 +42,14 @@ const { title, description } = Astro.props;
 	</head>
 	<body class="bg-brand-beige text-brand-gray font-sans selection:bg-brand-pink selection:text-brand-pink-accent leading-relaxed">
 		<slot />
+    <script>
+      import Alpine from "alpinejs";
+      import collapse from "@alpinejs/collapse";
+
+      Alpine.plugin(collapse);
+      window.Alpine = Alpine;
+      Alpine.start();
+    </script>
 	</body>
 </html>
 
