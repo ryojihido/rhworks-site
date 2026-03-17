@@ -1,5 +1,4 @@
 ---
-import { existsSync } from 'node:fs';
 import Layout from '../layouts/Layout.astro';
 
 const works = [
@@ -38,8 +37,6 @@ const snsLinks = [
 ];
 
 const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
-const badgeImageFile = new URL('../../public/images/badges/generative-ai-passport-display.png', import.meta.url);
-const hasBadgeImage = existsSync(badgeImageFile);
 ---
 
 <Layout 
@@ -244,15 +241,13 @@ const hasBadgeImage = existsSync(badgeImageFile);
           </p>
 
           <div class="inline-flex max-w-2xl flex-col sm:flex-row items-start gap-4 rounded-[2rem] border border-brand-pink/20 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm">
-            {hasBadgeImage && (
-              <img
-                src={badgeImagePath}
-                alt="生成AIパスポート オープンバッジ"
-                class="h-16 w-16 rounded-2xl bg-brand-beige/70 object-contain p-1.5 shadow-sm"
-                loading="lazy"
-                decoding="async"
-              />
-            )}
+            <img
+              src={badgeImagePath}
+              alt="生成AIパスポート オープンバッジ"
+              class="h-16 w-16 rounded-2xl bg-brand-beige/70 object-contain p-1.5 shadow-sm"
+              loading="lazy"
+              decoding="async"
+            />
 
             <div class="space-y-1 text-left">
               <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-brand-pink-accent">
