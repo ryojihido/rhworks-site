@@ -19,6 +19,8 @@ yarn-error.log*
 dev-server.log
 dev-server.err
 preview-server.log
+.astro-dev.out.log
+.astro-dev.err.log
 
 # OS-specific files
 .DS_Store
@@ -27,3 +29,6 @@ Thumbs.db
 # Local management files (Not for GitHub)
 AI_GUIDELINES.md
 DEPLOY_CHECKLIST.md
+
+# local exports of verifiable badges should not be published by default
+public/images/badges/Openバッヂ*.png

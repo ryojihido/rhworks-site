@@ -1,4 +1,5 @@
 ---
+import { existsSync } from 'node:fs';
 import Layout from '../layouts/Layout.astro';
 
 const works = [
@@ -35,6 +36,10 @@ const snsLinks = [
   { name: 'Amazon', url: 'https://www.amazon.co.jp/stores/author/B00S91FLGK', icon: '/images/sns/Amazon.svg' },
   { name: 'GitHub', url: 'https://github.com/ryojihido', icon: '/images/sns/Github.svg' }
 ];
+
+const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
+const badgeImageFile = new URL('../../public/images/badges/generative-ai-passport-display.png', import.meta.url);
+const hasBadgeImage = existsSync(badgeImageFile);
 ---
 
 <Layout 
@@ -237,6 +242,30 @@ const snsLinks = [
           <p class="text-base text-brand-gray/80">
             漫画家・作家として、私は制作プロセスにおける生成AI（機械学習技術）の利用について、透明性を保ちつつ、技術の可能性を広げていく姿勢をとっています。
           </p>
+
+          <div class="inline-flex max-w-2xl flex-col sm:flex-row items-start gap-4 rounded-[2rem] border border-brand-pink/20 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm">
+            {hasBadgeImage && (
+              <img
+                src={badgeImagePath}
+                alt="生成AIパスポート オープンバッジ"
+                class="h-16 w-16 rounded-2xl bg-brand-beige/70 object-contain p-1.5 shadow-sm"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+
+            <div class="space-y-1 text-left">
+              <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-brand-pink-accent">
+                Generative AI Passport
+              </p>
+              <p class="text-sm leading-relaxed text-brand-gray/85">
+                2026年2月に生成AIパスポートを取得。著作権・AIガイドラインを理解した上で、生成AIを制作に活用しています。
+              </p>
+              <p class="text-xs leading-relaxed text-brand-gray/65 italic">
+                Certified in February 2026. I use generative AI in my creative practice with an understanding of copyright and AI-related guidelines.
+              </p>
+            </div>
+          </div>
           
           <div x-show="expanded" x-collapse>
             <div class="space-y-6 pt-4 border-t border-brand-pink/20 mt-6">

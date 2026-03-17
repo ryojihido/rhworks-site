@@ -1,4 +1,10 @@
 ---
+import { existsSync } from 'node:fs';
+
+// Use a display-safe export instead of the original badge file to avoid exposing credential metadata.
+const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
+const badgeImageFile = new URL('../../../public/images/badges/generative-ai-passport-display.png', import.meta.url);
+const hasBadgeImage = existsSync(badgeImageFile);
 ---
 <section class="py-32 bg-brand-beige border-t border-brand-pink/10">
   <div class="container mx-auto px-8 text-center space-y-10">
@@ -26,26 +32,54 @@
       </a>
     </div>
 
-    <p class="max-w-3xl mx-auto text-[11px] leading-relaxed text-brand-gray/50">
-      本企画は、
-      <a
-        href="https://www8.cao.go.jp/cstp/ai/ai_act/ai_act.html"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="underline decoration-brand-pink/40 underline-offset-4 hover:text-brand-pink-accent transition-colors"
-      >
-        人工知能関連技術の研究開発及び活用の推進に関する法律
-      </a>
-      および
-      <a
-        href="https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/index.html"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="underline decoration-brand-pink/40 underline-offset-4 hover:text-brand-pink-accent transition-colors"
-      >
-        AI事業者ガイドライン
-      </a>
-      などの関連法令・指針の趣旨を踏まえて設計・運用しています。
-    </p>
+    <div class="max-w-3xl mx-auto space-y-4">
+      <p class="text-[11px] leading-relaxed text-brand-gray/50">
+        生成AIパスポートを取得し、著作権・AIガイドラインへの理解を前提に、本企画では生成AIを制作に活用しています。
+        <span class="block mt-2">
+          また、本企画は、
+        </span>
+        <a
+          href="https://www8.cao.go.jp/cstp/ai/ai_act/ai_act.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline decoration-brand-pink/40 underline-offset-4 hover:text-brand-pink-accent transition-colors"
+        >
+          人工知能関連技術の研究開発及び活用の推進に関する法律
+        </a>
+        および
+        <a
+          href="https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline decoration-brand-pink/40 underline-offset-4 hover:text-brand-pink-accent transition-colors"
+        >
+          AI事業者ガイドライン
+        </a>
+        などの関連法令・指針の趣旨を踏まえ、透明性と人間の最終判断を大切にしながら設計・運用しています。
+      </p>
+
+      <div class="flex justify-center">
+        <div class="inline-flex items-center gap-3 rounded-2xl border border-brand-pink/20 bg-white/80 px-4 py-3 shadow-sm backdrop-blur-sm">
+          {hasBadgeImage && (
+            <img
+              src={badgeImagePath}
+              alt="生成AIパスポート オープンバッジ"
+              class="h-12 w-12 rounded-xl bg-brand-beige/70 object-contain p-1"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+
+          <div class={hasBadgeImage ? 'text-left' : 'text-center'}>
+            <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-brand-pink-accent">
+              Generative AI Passport
+            </p>
+            <p class="text-xs text-brand-gray/75">
+              取得済み / 2026.02
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
