@@ -1,0 +1,10 @@
+{
+  "simpleBrowser.focusLockIndicator.enabled": true,
+  "VsCodeTaskButtons.tasks": [
+    {
+      "label": "$(browser) Preview",
+      "task": "Open Simple Browser",
+      "tooltip": "Simple Browserで開く"
+    }
+  ]
+}

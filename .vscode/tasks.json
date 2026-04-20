@@ -1,0 +1,41 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Open Simple Browser",
+      "type": "shell",
+      "command": "Start-Process 'vscode://vscode.simple-browser/show?url=http%3A%2F%2Flocalhost%3A4321%2F'",
+      "options": {
+        "shell": {
+          "executable": "powershell.exe",
+          "args": ["-NoProfile", "-Command"]
+        }
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "dedicated",
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "Astro: Dev + Preview",
+      "type": "shell",
+      "command": "Start-Process npm -ArgumentList 'run','dev'; $timeout = 30; $elapsed = 0; do { Start-Sleep 1; $elapsed++ } while (-not (Test-NetConnection -ComputerName localhost -Port 4321 -InformationLevel Quiet -WarningAction SilentlyContinue) -and $elapsed -lt $timeout); Start-Process 'vscode://vscode.simple-browser/show?url=http%3A%2F%2Flocalhost%3A4321%2F'",
+      "options": {
+        "shell": {
+          "executable": "powershell.exe",
+          "args": ["-NoProfile", "-Command"]
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "showReuseMessage": false
+      }
+    }
+  ]
+}
