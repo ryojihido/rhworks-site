@@ -11,6 +11,10 @@ interface WorkItem {
   summary?: string;
   detailNote?: string;
   modalImageContain?: boolean;
+  previewPages?: string[];
+  takecomiUrl?: string;
+  takecomiBanner?: string;
+  takecomiComment?: string;
 }
 
 const rawWorks: WorkItem[] = [
@@ -37,6 +41,10 @@ const rawWorks: WorkItem[] = [
     format: "異種族交流ファンタジー",
     publisher: "バンブーコミックス 異世界BC / 竹書房",
     summary: "ヒトが地上の支配者となった時代、偉大な魔法使いが「ヒト化の秘術」を生み出した。虫とヒトが世界を紡ぐ、異種族交流ファンタジー開幕!!",
+    previewPages: Array.from({ length: 33 }, (_, index) => `/images/previews/mushi_mayu/${String(index + 1).padStart(2, '0')}.jpg`),
+    takecomiUrl: "https://takecomic.jp/series/6ea1aceba5002",
+    takecomiBanner: "/images/previews/kuzu_ouji/takecomi.png",
+    takecomiComment: "竹コミ！でカムバック連載中。会員登録すれば毎日無料で読める！最新話をチェック！",
   },
   {
     title: "虫の皇女マユの旅-Author’s Edition-",
@@ -290,6 +298,10 @@ const featuredRecommendation = {
   url: "https://amzn.to/4vjp4VJ",
   ctaLabel: "Amazonで見る",
   isAffiliate: true,
+  previewPages: Array.from({ length: 35 }, (_, index) => `/images/previews/kuzu_ouji/${String(index + 1).padStart(2, '0')}.jpg`),
+  takecomiUrl: "https://takecomic.jp/series/fbd8defebb230",
+  takecomiBanner: "/images/previews/kuzu_ouji/takecomi.png",
+  takecomiComment: "竹コミ！で好評連載中。会員登録すれば毎日無料で読める！最新話をチェック！",
 };
 
 const snsLinks = [
@@ -309,6 +321,102 @@ const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
   socialImage="/og/rhworks-share.png"
   socialImageAlt="RHworksの公式サイト共有サムネイル"
 >
+  <script is:inline>
+    document.addEventListener('alpine:init', () => {
+      window.Alpine.data('mangaPreviewPage', () => ({
+        open: false,
+        modalOpen: false,
+        activeWork: null,
+
+        viewerOpen: false,
+        viewerClosing: false,
+        viewerSlideIndex: 0,
+        slides: [],
+        imageAspects: {},
+        touchStartX: 0,
+
+        async openViewer() {
+          this.viewerSlideIndex = 0;
+          this.viewerOpen = true;
+          this.slides = [];
+          await this.buildSlides();
+        },
+        closeViewer() {
+          this.viewerClosing = true;
+          this.viewerOpen = false;
+          this.viewerSlideIndex = 0;
+          setTimeout(() => { this.viewerClosing = false; }, 0);
+        },
+        async buildSlides() {
+          const pages = this.activeWork?.previewPages;
+          if (!pages || pages.length === 0) { this.slides = []; return; }
+
+          const aspects = await Promise.all(pages.map(src => this.getAspect(src)));
+          const isMobile = window.innerWidth < 768;
+          const slides = [];
+
+          if (isMobile) {
+            for (let i = 0; i < pages.length; i++) {
+              if (aspects[i] > 1) {
+                slides.push({ type: 'spread-half', page: pages[i], side: 'right' });
+                slides.push({ type: 'spread-half', page: pages[i], side: 'left' });
+              } else {
+                slides.push({ type: 'single-full', page: pages[i] });
+              }
+            }
+            this.slides = slides;
+            return;
+          }
+
+          let i = 0;
+          while (i < pages.length) {
+            const isSpread = aspects[i] > 1;
+            if (isSpread) {
+              slides.push({ type: 'spread', page: pages[i] });
+              i++;
+            } else if (i === 0) {
+              slides.push({ type: 'single-left', page: pages[i] });
+              i++;
+            } else if (i + 1 < pages.length && aspects[i + 1] <= 1) {
+              slides.push({ type: 'pair', right: pages[i], left: pages[i + 1] });
+              i += 2;
+            } else {
+              slides.push({ type: 'single-right', page: pages[i] });
+              i++;
+            }
+          }
+          this.slides = slides;
+        },
+        getAspect(src) {
+          return new Promise(resolve => {
+            if (this.imageAspects[src]) { resolve(this.imageAspects[src]); return; }
+            const img = new Image();
+            img.onload = () => {
+              const ratio = img.naturalWidth / img.naturalHeight;
+              this.imageAspects[src] = ratio;
+              resolve(ratio);
+            };
+            img.onerror = () => resolve(0.7);
+            img.src = src;
+          });
+        },
+        get hasInlineFinalCta() {
+          const lastSlide = this.slides[this.slides.length - 1];
+          return lastSlide?.type === 'single-right';
+        },
+        get totalViewerSlides() { return this.slides.length + (this.hasInlineFinalCta ? 0 : 1); },
+        get isAffiliateSlide() { return !this.hasInlineFinalCta && this.slides.length > 0 && this.viewerSlideIndex === this.slides.length; },
+        nextSlide() { if (this.viewerSlideIndex < this.totalViewerSlides - 1) this.viewerSlideIndex++; },
+        prevSlide() { if (this.viewerSlideIndex > 0) this.viewerSlideIndex--; },
+        swipeEnd(e) {
+          const dx = e.changedTouches[0].clientX - this.touchStartX;
+          if (Math.abs(dx) < 40) return;
+          dx > 0 ? this.nextSlide() : this.prevSlide();
+        },
+      }));
+    });
+  </script>
+
 	<main class="max-w-4xl mx-auto px-8 py-20">
     <!-- Hero Section -->
 		<header class="mb-24 text-center md:text-left">
@@ -352,7 +460,7 @@ const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
 		</header>
 
     <!-- Content Sections -->
-    <div class="space-y-32">
+    <div x-data="mangaPreviewPage()" class="space-y-32">
       <!-- About -->
       <section id="about" class="space-y-8" x-data="{ lang: 'jp' }">
         <div class="flex items-center justify-between">
@@ -446,6 +554,17 @@ const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
               </div>
 
               <div class="flex flex-col items-start gap-3 pt-1">
+                <button
+                  type="button"
+                  @click={`activeWork = ${JSON.stringify(featuredRecommendation)}; openViewer()`}
+                  class="group inline-flex min-w-[17rem] items-center justify-center gap-3 rounded-2xl border-2 border-brand-gray bg-transparent px-8 py-4 text-sm font-bold tracking-[0.2em] uppercase text-brand-gray transition-all hover:-translate-y-0.5 hover:bg-brand-gray hover:text-brand-beige hover:shadow-xl"
+                >
+                  <svg class="w-4 h-4 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"></path>
+                  </svg>
+                  <span>試し読み</span>
+                </button>
+
                 <a
                   href={featuredRecommendation.url}
                   target="_blank"
@@ -471,7 +590,7 @@ const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
           <h2 class="text-sm font-bold tracking-[0.3em] uppercase text-brand-pink-accent/80">Selected Works</h2>
         </div>
         
-        <div x-data="{ open: false, modalOpen: false, activeWork: null }" class="relative">
+        <div class="relative">
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6" :class="open ? '' : 'max-h-[640px] overflow-hidden'">
             {works.map(work => (
               <button
@@ -527,10 +646,10 @@ const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
               x-transition:leave-start="opacity-100"
               x-transition:leave-end="opacity-0"
               class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-brand-gray/90 backdrop-blur-xl"
-              @keydown.escape.window="modalOpen = false"
+              @keydown.escape.window="if (!viewerOpen && !viewerClosing) modalOpen = false"
             >
               <div
-                @click.away="modalOpen = false"
+                @click.away="if (!viewerOpen && !viewerClosing) modalOpen = false"
                 class="relative w-full max-w-5xl max-h-[90vh] bg-brand-beige rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row"
               >
                 <button
@@ -580,6 +699,19 @@ const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
                     </div>
 
                     <div class="space-y-4">
+                      <template x-if="activeWork?.previewPages && activeWork.previewPages.length > 0">
+                        <button
+                          type="button"
+                          @click="openViewer()"
+                          class="group inline-flex w-full items-center justify-center gap-3 rounded-2xl border-2 border-brand-gray bg-transparent px-6 py-4 text-sm font-bold tracking-[0.2em] uppercase text-brand-gray transition-all hover:-translate-y-0.5 hover:bg-brand-gray hover:text-brand-beige hover:shadow-xl"
+                        >
+                          <svg class="w-4 h-4 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"></path>
+                          </svg>
+                          <span>試し読み</span>
+                        </button>
+                      </template>
+
                       <a
                         :href="activeWork?.url"
                         target="_blank"
@@ -599,6 +731,278 @@ const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
                   </div>
                 </div>
               </div>
+            </div>
+          </template>
+
+          <!-- Manga Preview Viewer (nested, spread-aware) -->
+          <template x-teleport="body">
+            <div
+              x-show="viewerOpen"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100"
+              x-transition:leave="transition ease-in duration-200"
+              x-transition:leave-start="opacity-100"
+              x-transition:leave-end="opacity-0"
+              class="fixed inset-0 z-[60] bg-brand-gray/95 backdrop-blur-xl"
+              @keydown.escape.window="if (viewerOpen) closeViewer()"
+              @keydown.arrow-left.window="if (viewerOpen) nextSlide()"
+              @keydown.arrow-right.window="if (viewerOpen) prevSlide()"
+              style="display: none;"
+            >
+              <div class="absolute top-0 inset-x-0 z-10 flex items-center justify-between gap-4 px-5 md:px-8 py-5 bg-gradient-to-b from-brand-gray via-brand-gray/80 to-transparent">
+                <div class="min-w-0 flex-1">
+                  <p class="text-[10px] font-bold tracking-[0.3em] uppercase text-brand-pink-accent/80">Preview</p>
+                  <h3 class="mt-1 text-sm md:text-base font-serif italic text-brand-beige truncate" x-text="activeWork?.title"></h3>
+                </div>
+                <div class="flex items-center gap-4 shrink-0">
+                  <span
+                    class="text-brand-beige/70 text-[11px] font-bold tracking-[0.2em] tabular-nums uppercase"
+                    x-text="slides.length === 0 ? '...' : (isAffiliateSlide ? 'Fin' : ((viewerSlideIndex + 1) + ' / ' + slides.length))"
+                  ></span>
+                  <button
+                    type="button"
+                    @click.stop="closeViewer()"
+                    class="p-3 rounded-full bg-brand-gray/80 hover:bg-brand-gray text-brand-beige border border-white/10 transition-all hover:scale-110"
+                    aria-label="Close preview viewer"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="h-full w-full flex items-center justify-center px-4 md:px-24 lg:px-32 xl:px-36 pt-24 pb-12"
+                @touchstart="touchStartX = $event.touches[0].clientX"
+                @touchend="swipeEnd($event)"
+              >
+                <template x-if="slides.length === 0">
+                  <div class="flex items-center gap-3 text-brand-beige/60">
+                    <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0110 10" stroke-linecap="round"></path></svg>
+                    <span class="text-[10px] font-bold tracking-[0.3em] uppercase">Loading Preview</span>
+                  </div>
+                </template>
+
+                <template x-if="slides.length > 0 && !isAffiliateSlide && slides[viewerSlideIndex]?.type === 'spread'">
+                  <img
+                    :src="slides[viewerSlideIndex].page"
+                    alt=""
+                    class="max-h-full max-w-full object-contain select-none pointer-events-none rounded-[1.25rem] shadow-2xl"
+                    draggable="false"
+                  />
+                </template>
+
+                <template x-if="slides.length > 0 && !isAffiliateSlide && slides[viewerSlideIndex]?.type === 'single-full'">
+                  <img
+                    :src="slides[viewerSlideIndex].page"
+                    alt=""
+                    class="max-h-full max-w-full object-contain select-none pointer-events-none rounded-[1.25rem] shadow-2xl"
+                    draggable="false"
+                  />
+                </template>
+
+                <template x-if="slides.length > 0 && !isAffiliateSlide && slides[viewerSlideIndex]?.type === 'spread-half'">
+                  <div class="relative aspect-[720/1024] max-h-full max-w-full overflow-hidden rounded-[1.25rem] shadow-2xl">
+                    <img
+                      :src="slides[viewerSlideIndex].page"
+                      alt=""
+                      class="absolute top-0 h-full max-w-none select-none pointer-events-none"
+                      :class="slides[viewerSlideIndex].side === 'right' ? 'right-0' : 'left-0'"
+                      draggable="false"
+                    />
+                  </div>
+                </template>
+
+                <template x-if="slides.length > 0 && !isAffiliateSlide && slides[viewerSlideIndex]?.type === 'pair'">
+                  <div class="grid h-full w-full max-w-full grid-cols-2 items-center gap-0">
+                    <div class="flex h-full min-w-0 items-center justify-end">
+                      <img
+                        :src="slides[viewerSlideIndex].left"
+                        alt=""
+                        class="max-h-full max-w-full object-contain select-none pointer-events-none rounded-l-[1.25rem] shadow-2xl"
+                        draggable="false"
+                      />
+                    </div>
+                    <div class="flex h-full min-w-0 items-center justify-start">
+                      <img
+                        :src="slides[viewerSlideIndex].right"
+                        alt=""
+                        class="max-h-full max-w-full object-contain select-none pointer-events-none rounded-r-[1.25rem] shadow-2xl"
+                        draggable="false"
+                      />
+                    </div>
+                  </div>
+                </template>
+
+                <template x-if="slides.length > 0 && !isAffiliateSlide && slides[viewerSlideIndex]?.type === 'single-left'">
+                  <div class="grid h-full w-full max-w-full grid-cols-2 items-center gap-0">
+                    <div class="flex h-full min-w-0 items-center justify-end">
+                      <img
+                        :src="slides[viewerSlideIndex].page"
+                        alt=""
+                        class="max-h-full max-w-full object-contain select-none pointer-events-none rounded-[1.25rem] shadow-2xl"
+                        draggable="false"
+                      />
+                    </div>
+                    <div aria-hidden="true"></div>
+                  </div>
+                </template>
+
+                <template x-if="slides.length > 0 && !isAffiliateSlide && slides[viewerSlideIndex]?.type === 'single-right'">
+                  <div class="grid h-full w-full max-w-full grid-cols-2 items-center gap-0">
+                    <div
+                      x-show="viewerSlideIndex === slides.length - 1"
+                      class="flex h-full min-w-0 items-center justify-center px-4"
+                    >
+                      <div class="flex max-h-full w-full max-w-xs flex-col items-center justify-center gap-3 text-center">
+                        <div class="flex items-center gap-3">
+                          <span class="w-2 h-2 bg-brand-pink-accent rotate-45"></span>
+                          <p class="text-brand-pink-accent/90 text-[10px] font-bold tracking-[0.3em] uppercase">Fin</p>
+                          <span class="w-2 h-2 bg-brand-pink-accent rotate-45"></span>
+                        </div>
+                        <a
+                          :href="activeWork?.url"
+                          target="_blank"
+                          :rel="activeWork?.isAffiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'"
+                          class="block group"
+                        >
+                          <div
+                            class="rounded-[1.5rem] bg-brand-beige/5 overflow-hidden relative border border-brand-pink/20 shadow-2xl p-2 transition-all group-hover:scale-[1.02]"
+                            :class="activeWork?.modalImageContain ? 'p-4' : ''"
+                          >
+                            <img
+                              :src="'/images/thumbnails/' + activeWork?.image"
+                              :alt="activeWork?.title"
+                              class="max-h-[24vh] w-auto mx-auto rounded-[1rem]"
+                              :class="activeWork?.modalImageContain ? 'object-contain' : ''"
+                            />
+                          </div>
+                        </a>
+                        <div class="space-y-1">
+                          <h4 class="text-brand-beige text-base md:text-lg font-serif italic font-bold" x-text="activeWork?.title"></h4>
+                          <p class="text-brand-beige/70 text-xs font-serif italic">続きは本編で。</p>
+                        </div>
+                        <a
+                          :href="activeWork?.url"
+                          target="_blank"
+                          :rel="activeWork?.isAffiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'"
+                          class="inline-flex items-center justify-center rounded-2xl bg-brand-beige px-6 py-3 text-xs font-bold tracking-[0.2em] uppercase text-brand-gray transition-all hover:-translate-y-0.5 hover:shadow-xl"
+                        >
+                          <span x-text="activeWork?.ctaLabel"></span>
+                        </a>
+                        <p x-show="activeWork?.isAffiliate" class="text-[10px] leading-relaxed text-brand-beige/50">
+                          Amazonボタンにはアフィリエイトリンクを使用しています。
+                        </p>
+                        <template x-if="activeWork?.takecomiUrl">
+                          <div class="w-full space-y-2 border-t border-brand-beige/10 pt-2">
+                            <a
+                              :href="activeWork?.takecomiUrl"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="group block rounded-2xl border border-white/80 bg-white px-4 py-3 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-xl"
+                            >
+                              <img
+                                :src="activeWork?.takecomiBanner"
+                                alt="竹コミ！"
+                                class="mx-auto h-auto w-full max-w-[14rem] transition-transform group-hover:scale-[1.03]"
+                              />
+                            </a>
+                            <p class="text-[10px] leading-relaxed text-brand-beige/65" x-text="activeWork?.takecomiComment"></p>
+                          </div>
+                        </template>
+                      </div>
+                    </div>
+                    <div x-show="viewerSlideIndex !== slides.length - 1" aria-hidden="true"></div>
+                    <div class="flex h-full min-w-0 items-center justify-start">
+                      <img
+                        :src="slides[viewerSlideIndex].page"
+                        alt=""
+                        class="max-h-full max-w-full object-contain select-none pointer-events-none rounded-[1.25rem] shadow-2xl"
+                        draggable="false"
+                      />
+                    </div>
+                  </div>
+                </template>
+
+                <template x-if="isAffiliateSlide">
+                  <div class="flex flex-col items-center justify-center gap-6 max-w-sm text-center">
+                    <div class="flex items-center gap-3">
+                      <span class="w-2 h-2 bg-brand-pink-accent rotate-45"></span>
+                      <p class="text-brand-pink-accent/90 text-[10px] font-bold tracking-[0.3em] uppercase">Fin</p>
+                      <span class="w-2 h-2 bg-brand-pink-accent rotate-45"></span>
+                    </div>
+                    <a
+                      :href="activeWork?.url"
+                      target="_blank"
+                      :rel="activeWork?.isAffiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'"
+                      class="block group"
+                    >
+                      <div
+                        class="rounded-[2rem] bg-brand-beige/5 overflow-hidden relative border border-brand-pink/20 shadow-2xl p-3 transition-all group-hover:scale-[1.02]"
+                        :class="activeWork?.modalImageContain ? 'p-4' : ''"
+                      >
+                        <img
+                          :src="'/images/thumbnails/' + activeWork?.image"
+                          :alt="activeWork?.title"
+                          class="max-h-[34vh] w-auto mx-auto rounded-[1.25rem]"
+                          :class="activeWork?.modalImageContain ? 'object-contain' : ''"
+                        />
+                      </div>
+                    </a>
+                    <div class="space-y-2">
+                      <h4 class="text-brand-beige text-lg md:text-xl font-serif italic font-bold" x-text="activeWork?.title"></h4>
+                      <p class="text-brand-beige/70 text-sm font-serif italic">続きは本編で。</p>
+                    </div>
+                    <a
+                      :href="activeWork?.url"
+                      target="_blank"
+                      :rel="activeWork?.isAffiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'"
+                      class="inline-flex items-center justify-center rounded-2xl bg-brand-beige px-8 py-4 text-sm font-bold tracking-[0.2em] uppercase text-brand-gray transition-all hover:-translate-y-0.5 hover:shadow-xl"
+                    >
+                      <span x-text="activeWork?.ctaLabel"></span>
+                    </a>
+                    <p x-show="activeWork?.isAffiliate" class="text-[10px] leading-relaxed text-brand-beige/50">
+                      Amazonボタンにはアフィリエイトリンクを使用しています。
+                    </p>
+                    <template x-if="activeWork?.takecomiUrl">
+                      <div class="w-full space-y-3 border-t border-brand-beige/10 pt-4">
+                        <a
+                          :href="activeWork?.takecomiUrl"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="group block rounded-2xl border border-white/80 bg-white px-5 py-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-xl"
+                        >
+                          <img
+                            :src="activeWork?.takecomiBanner"
+                            alt="竹コミ！"
+                            class="mx-auto h-auto w-full max-w-[18rem] transition-transform group-hover:scale-[1.03]"
+                          />
+                        </a>
+                        <p class="text-xs leading-relaxed text-brand-beige/65" x-text="activeWork?.takecomiComment"></p>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+              </div>
+
+              <button
+                type="button"
+                @click="nextSlide()"
+                :disabled="viewerSlideIndex >= totalViewerSlides - 1"
+                class="absolute left-8 lg:left-12 top-1/2 hidden -translate-y-1/2 p-4 rounded-full bg-brand-gray/60 hover:bg-brand-gray text-brand-beige border border-white/10 transition-all hover:scale-110 disabled:opacity-20 disabled:pointer-events-none md:flex"
+                aria-label="Next"
+              >
+                <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+              </button>
+              <button
+                type="button"
+                @click="prevSlide()"
+                :disabled="viewerSlideIndex === 0"
+                class="absolute right-8 lg:right-12 top-1/2 hidden -translate-y-1/2 p-4 rounded-full bg-brand-gray/60 hover:bg-brand-gray text-brand-beige border border-white/10 transition-all hover:scale-110 disabled:opacity-20 disabled:pointer-events-none md:flex"
+                aria-label="Previous"
+              >
+                <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+              </button>
             </div>
           </template>
         </div>
