@@ -802,11 +802,14 @@ const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
                 </template>
 
                 <template x-if="slides.length > 0 && !isAffiliateSlide && slides[viewerSlideIndex]?.type === 'spread-half'">
-                  <div class="relative aspect-[720/1024] max-h-full max-w-full overflow-hidden rounded-[1.25rem] shadow-2xl">
+                  <div
+                    class="relative max-h-full max-w-full overflow-hidden rounded-[1.25rem] shadow-2xl"
+                    style="width: min(calc(100vw - 2rem), calc(70.3125vh - 6.328125rem)); aspect-ratio: 720 / 1024;"
+                  >
                     <img
                       :src="slides[viewerSlideIndex].page"
                       alt=""
-                      class="absolute top-0 h-full max-w-none select-none pointer-events-none"
+                      class="absolute top-0 h-full w-auto max-w-none select-none pointer-events-none"
                       :class="slides[viewerSlideIndex].side === 'right' ? 'right-0' : 'left-0'"
                       draggable="false"
                     />
