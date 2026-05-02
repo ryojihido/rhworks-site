@@ -1,0 +1,70 @@
+---
+const petUrl = 'https://codex-pet-share.pages.dev/#/pets/alpha';
+const thumbnailPath = '/images/alphabeta/codex-pet/alpha-share.png';
+---
+
+<section class="py-20 bg-brand-beige border-y border-brand-pink/10">
+  <div class="container mx-auto px-8 max-w-5xl">
+    <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-14 items-center">
+      <a
+        href={petUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group block overflow-hidden rounded-[2rem] border border-brand-pink/20 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-brand-pink/15"
+        aria-label="Codex Pet Shareでαのペットを見る"
+      >
+        <img
+          src={thumbnailPath}
+          alt="Codex Pet Shareで配布しているαのペットのサムネイル"
+          class="aspect-[1200/630] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          loading="lazy"
+          decoding="async"
+          width="1200"
+          height="630"
+        />
+      </a>
+
+      <div class="space-y-7">
+        <div class="space-y-4">
+          <p class="text-sm font-bold tracking-[0.3em] uppercase text-brand-pink-accent/80">
+            Codex Pet
+          </p>
+          <h2 class="text-3xl md:text-4xl font-serif font-bold tracking-tight text-gray-900">
+            αが、Codexの小さな相棒になりました。
+          </h2>
+          <p class="text-base leading-8 text-brand-gray/70">
+            αβlabのキャラクター「α」を、Codex上で動くペットとして配布しています。赤からオレンジへ変わる髪と丸いお団子、青緑の瞳、大きな白い襟を持つ女の子型のAgentAIです。
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          {['animated', 'mascot', 'pixel', 'soft'].map(tag => (
+            <span class="rounded-full border border-brand-pink/25 bg-white/70 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gray/60">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a
+            href={petUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-3 rounded-2xl bg-brand-gray px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-brand-beige transition-all hover:-translate-y-1 hover:shadow-xl"
+          >
+            View on Codex Pet Share
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7m0 0H8m9 0v9"></path>
+            </svg>
+          </a>
+          <a
+            href="/alphabeta/guidelines/"
+            class="inline-flex items-center justify-center rounded-2xl border border-brand-pink/30 bg-white/70 px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-brand-pink-accent transition-all hover:-translate-y-1 hover:bg-white hover:shadow-lg"
+          >
+            Usage Guidelines
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
