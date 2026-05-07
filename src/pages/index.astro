@@ -12,6 +12,7 @@ interface WorkItem {
   detailNote?: string;
   modalImageContain?: boolean;
   previewPages?: string[];
+  ctaLabel?: string;
   takecomiUrl?: string;
   takecomiBanner?: string;
   takecomiComment?: string;
@@ -25,6 +26,8 @@ const rawWorks: WorkItem[] = [
     format: "初心者登山4コマ",
     publisher: "バンブーコミックス / 竹書房",
     summary: "ワガママ三十路OL、御岳ノリコ。彼氏にフラれ傷心プチ旅行で向かった先は、登山者数世界一を誇る高尾山! そこで出会った一匹の子天狗が、ノリコの生活を一変させる…!? 子天狗とOLの清く正しい初心者登山4コマ!",
+    previewPages: Array.from({ length: 6 }, (_, index) => `/images/previews/takao_highheel/${String(index + 1).padStart(2, '0')}.jpg`),
+    ctaLabel: "コミックスを買う",
   },
   {
     title: "高尾の天狗とミドリの平日",
@@ -33,6 +36,8 @@ const rawWorks: WorkItem[] = [
     format: "高尾山4コマ",
     publisher: "バンブーコミックス / 竹書房",
     summary: "三国ミドリ25歳、断れない系女子。ドタキャンされてぼっちで登ったのは、ギネスが認める登山客数世界一の山・高尾山。一人ビアマウントを満喫しようとしたら目の前に天狗の子が現れて、何故か懐かれた!?",
+    previewPages: Array.from({ length: 10 }, (_, index) => `/images/previews/takao_midori/${String(index + 1).padStart(2, '0')}.jpg`),
+    ctaLabel: "コミックスを買う",
   },
   {
     title: "虫の皇女マユの旅",
@@ -69,6 +74,8 @@ const rawWorks: WorkItem[] = [
     format: "ファンタジー",
     publisher: "バンブーコミックス / 竹書房",
     summary: "星界を追われた第一皇子のクロと、忠実な従者のユリ。奪われたクロの命のカケラを探して世界中を旅をし、辿り着いた日本で彼らは――!?",
+    previewPages: Array.from({ length: 16 }, (_, index) => `/images/previews/panaou_bamboo/${String(index + 1).padStart(2, '0')}.jpg`),
+    ctaLabel: "コミックスを買う",
   },
   {
     title: "MOTHPHILIA-氷堂涼二蛾集-",
@@ -283,9 +290,9 @@ const works = rawWorks.map((work) => ({
   linkLabel: work.label || (isAmazonLink(work.url) ? 'Amazon' : 'External Link'),
   ctaLabel: work.label?.includes('公式サイト')
     ? '公式サイトで見る'
-    : isAmazonLink(work.url)
+    : work.ctaLabel || (isAmazonLink(work.url)
       ? 'Amazonで見る'
-      : '詳細を見る',
+      : '詳細を見る'),
   isAffiliate: isAmazonLink(work.url),
 }));
 
