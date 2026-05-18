@@ -1,0 +1,78 @@
+---
+const downloadPath = '/downloads/codex-pet-alpha-v1.0.zip';
+const thumbnailPath = '/images/alphabeta/codex-pet/alpha-share.png';
+const packageSize = '1.9MB';
+---
+
+<section class="py-20 bg-brand-beige border-y border-brand-pink/10">
+  <div class="container mx-auto px-8 max-w-6xl">
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-12 items-center">
+      <div class="overflow-hidden rounded-[2rem] border border-brand-pink/20 bg-white shadow-sm">
+        <img
+          src={thumbnailPath}
+          alt="Codex Petとして配布しているαのサムネイル"
+          class="aspect-[1200/630] w-full object-cover"
+          loading="lazy"
+          decoding="async"
+          width="1200"
+          height="630"
+        />
+      </div>
+
+      <div class="space-y-7">
+        <div class="space-y-4">
+          <p class="text-xs font-bold tracking-[0.32em] uppercase text-brand-pink-accent/80">
+            Codex Pet
+          </p>
+          <h2 class="text-2xl md:text-3xl font-serif font-bold leading-snug text-gray-900">
+            αを、Codexの小さな相棒として配布しています。
+          </h2>
+          <p class="text-sm md:text-base leading-7 text-brand-gray/70">
+            αβlabのキャラクター「α」をCodex Pet用のZIPにしました。中身はpet.json、spritesheet.webp、README、利用条件、チェックサムのみで、API情報や個人情報は含まれていません。
+          </p>
+          <ol class="space-y-2 text-sm leading-6 text-brand-gray/70">
+            <li class="flex gap-3">
+              <span class="font-bold text-brand-pink-accent">1.</span>
+              <span>ZIPを解凍します。</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-bold text-brand-pink-accent">2.</span>
+              <span>解凍した<code class="mx-1 rounded bg-white/70 px-1.5 py-0.5 text-[0.9em]">alpha</code>フォルダを<code class="mx-1 rounded bg-white/70 px-1.5 py-0.5 text-[0.9em]">~/.codex/pets/</code>に入れて、Codexを起動します。表示されない場合は、Codexのアバター/Pet設定から<code class="mx-1 rounded bg-white/70 px-1.5 py-0.5 text-[0.9em]">alpha</code>を選択してください。</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          {['offline zip', 'codex pet', 'non-commercial', 'alpha'].map(tag => (
+            <span class="rounded-full border border-brand-pink/25 bg-white/70 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gray/60">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a
+            href={downloadPath}
+            download
+            class="inline-flex items-center justify-center gap-3 rounded-2xl bg-brand-gray px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-brand-beige transition-all hover:-translate-y-1 hover:shadow-xl"
+          >
+            Download ZIP
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1m-4-4-4 4m0 0-4-4m4 4V4"></path>
+            </svg>
+          </a>
+          <a
+            href="/alphabeta/guidelines/"
+            class="inline-flex items-center justify-center rounded-2xl border border-brand-pink/30 bg-white/70 px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-brand-pink-accent transition-all hover:-translate-y-1 hover:bg-white hover:shadow-lg"
+          >
+            Usage Guidelines
+          </a>
+        </div>
+
+        <p class="text-[10px] uppercase tracking-[0.24em] text-brand-gray/45">
+          codex-pet-alpha-v1.0.zip / {packageSize}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
