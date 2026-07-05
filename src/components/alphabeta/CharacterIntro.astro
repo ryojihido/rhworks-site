@@ -1,14 +1,14 @@
 ---
 const characters = [
-  { 
-    name: "キャラクター α（アルファ）", 
-    description: "「継承体AI」。天真爛漫、好奇心旺盛、元気。感情的。キョトンとした目。",
-    image: "/images/alphabeta/char_a.webp" 
+  {
+    name: "α（アルファ）— 継承体AI",
+    description: "天真爛漫で好奇心旺盛。感情で突っ走るムードメーカー。キョトンとした目がトレードマーク。",
+    image: "/images/alphabeta/char_a.webp"
   },
-  { 
-    name: "キャラクター β（ベタ）", 
-    description: "「編纂体AI」。大人しそうに見えるが野心家。論理的でドライ。目は開かない。",
-    image: "/images/alphabeta/char_b.webp" 
+  {
+    name: "β（ベタ）— 編纂体AI",
+    description: "物静かに見えて、じつは野心家。論理とドライな一言でαを振り回す。目は開かない。",
+    image: "/images/alphabeta/char_b.webp"
   }
 ];
 
@@ -22,12 +22,11 @@ const previewVideoPath = "/videos/alphabeta/side-by-side-sequential.mp4";
       {characters.map(char => (
         <div class="group space-y-4">
           <div class="aspect-[3/4] rounded-[2rem] bg-brand-pink/5 border border-brand-pink/10 overflow-hidden relative shadow-sm transition-all duration-500 group-hover:shadow-xl">
-            <img 
-              src={char.image} 
-              alt={char.name} 
-              class="w-full h-full object-cover grayscale brightness-110 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:brightness-100"
+            <img
+              src={char.image}
+              alt={char.name}
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div class="absolute inset-0 bg-brand-pink-accent/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500"></div>
           </div>
           <div class="px-4">
             <h3 class="text-xl font-serif font-bold text-gray-900 mb-2 truncate group-hover:text-brand-pink-accent transition-colors">
@@ -41,8 +40,33 @@ const previewVideoPath = "/videos/alphabeta/side-by-side-sequential.mp4";
       ))}
     </div>
 
+    <!-- 4-koma manga -->
+    <figure class="mt-16 max-w-md mx-auto">
+      <div class="overflow-hidden rounded-[2rem] border border-brand-pink/20 bg-white shadow-sm">
+        <img
+          src="/images/alphabeta/character-4koma.webp"
+          alt="αとβの関係を描いたAI生成4コマ漫画。悪役令嬢ものを提案するαと、プロンプトを書き換えて主従を逆転させるβ。"
+          class="w-full"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <figcaption class="mt-4 text-center text-xs font-serif italic text-brand-gray/60">
+        この4コマもAI生成（GPT Image 2）— ふたりの関係は、だいたいこんな感じです。
+      </figcaption>
+    </figure>
+
+    <div class="mt-16 text-center max-w-lg mx-auto space-y-2">
+      <p class="text-base font-serif italic text-brand-gray/70">
+        素材はふたり分。GeminiやChatGPTに読み込ませれば、<a href="#gallery" class="underline decoration-brand-pink/40 underline-offset-4 hover:text-brand-pink-accent transition-colors">Gallery</a>のような遊びがすぐ始められます。
+      </p>
+      <p class="text-sm font-serif italic text-brand-gray/55">
+        入力したデータがAIの学習に使われるサービスでも、使われないサービスでも、どちらでも構いません。
+      </p>
+    </div>
+
     <!-- Download Banner -->
-    <div class="mt-20">
+    <div class="mt-10">
       <a 
         href={downloadPath}
         download
