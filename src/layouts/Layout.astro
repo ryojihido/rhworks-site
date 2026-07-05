@@ -30,7 +30,7 @@ const socialImageType = socialImage.endsWith('.png')
 <html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/webp" href="/favicon.webp" />
     <link rel="canonical" href={canonicalUrl} />
 		<meta name="generator" content={Astro.generator} />
@@ -87,6 +87,7 @@ const socialImageType = socialImage.endsWith('.png')
 	}
 	html {
 		scroll-behavior: smooth;
+		overflow-x: hidden;
 	}
 	[x-cloak] {
 		display: none !important;
