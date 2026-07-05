@@ -13,11 +13,13 @@ export default {
                     pink: '#fbcfe8', // Light muted pink
                     'pink-accent': '#f472b6',
                     surface: '#fafaf9',
+                    ink: '#232120',
                 }
             },
             fontFamily: {
                 serif: ['"Noto Serif JP"', 'serif'],
                 sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
+                mono: ['"IBM Plex Mono"', 'monospace'],
             }
         },
     },

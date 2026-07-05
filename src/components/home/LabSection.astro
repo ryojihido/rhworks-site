@@ -1,0 +1,152 @@
+---
+const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
+
+const tools = [
+  { name: 'Invisible-Payload-Scanner', lang: 'PowerShell', line: 'AIが書いたコードを、実行する前に疑う。', gh: 'https://github.com/ryojihido/Invisible-Payload-Scanner', note: 'https://note.com/ryojihido/n/n2be83ff161a5' },
+  { name: 'AI-Usage-Gauge', lang: 'PowerShell', line: '使いすぎを、目に見える形にする。', gh: 'https://github.com/ryojihido/AI-Usage-Gauge', note: null },
+  { name: 'PDFwiki', lang: 'Python', line: 'クソ長いPDFを、辞書みたいに引く。', gh: 'https://github.com/ryojihido/PDFwiki', note: 'https://note.com/ryojihido/n/n948ad711b091' },
+  { name: 'Discord-JP-Quick-Translate', lang: 'TypeScript', line: '英語の会話に、ワンクリックで追いつく。', gh: 'https://github.com/ryojihido/Discord-JP-Quick-Translate', note: null },
+  { name: 'rhworks-site', lang: 'Astro', line: 'このサイト自体も、その一つです。', gh: 'https://github.com/ryojihido/rhworks-site', note: null },
+];
+
+const fieldNotes = [
+  { date: '2026.06.14', title: 'インドが追い越した日に、考えたこと【随想】', url: 'https://note.com/ryojihido/n/nacf97fec5678' },
+  { date: '2026.06.05', title: '生まれて初めてGASでスクリプトを組んでみた', url: 'https://note.com/ryojihido/n/n3c5318c9afca' },
+  { date: '2026.04.24', title: 'デジタル庁が源内OSSを公開した日に、漫画家が「自分だけの行政書類係」を作った話', url: 'https://note.com/ryojihido/n/n71c402a26c1f' },
+];
+---
+
+<section id="lab" class="my-4 py-16 px-6 md:px-10 rounded-3xl bg-[#ece8df] border border-brand-gray/10 font-mono text-brand-ink">
+  <div class="space-y-16">
+
+    <div class="flex items-center justify-between border-b border-brand-gray/10 pb-4">
+      <h2 class="text-sm font-bold tracking-[0.3em] uppercase text-brand-gray/50">Lab</h2>
+      <span class="text-[10px] text-brand-gray/35">stance / tools / records</span>
+    </div>
+
+    <!-- AI Stance -->
+    <div x-data="{ expanded: false }" class="md:grid md:grid-cols-[minmax(0,1fr),minmax(300px,400px)] md:gap-8 items-start">
+      <div class="space-y-5">
+        <h3 class="text-[10px] font-bold tracking-[0.25em] uppercase text-brand-pink-accent/90">My Stance on AI</h3>
+        <p class="text-base md:text-lg font-bold leading-relaxed text-brand-ink">
+          「どのような技術を使っても、最終的な表現を決めるのは人間の個性と判断である」
+        </p>
+        <p class="text-sm text-brand-gray/75 leading-relaxed max-w-2xl">
+          漫画家・作家として、私は制作プロセスにおける生成AI（機械学習技術）の利用について、透明性を保ちつつ、技術の可能性を広げていく姿勢をとっています。
+        </p>
+
+        <div class="inline-flex max-w-2xl flex-col sm:flex-row items-start gap-4 rounded-2xl border border-brand-gray/10 bg-white px-5 py-4 shadow-sm">
+          <img
+            src={badgeImagePath}
+            alt="生成AIパスポート オープンバッジ"
+            class="h-14 w-14 rounded-xl bg-brand-beige/70 object-contain p-1.5 shadow-sm"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="space-y-1 text-left">
+            <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-brand-pink-accent">Generative AI Passport</p>
+            <p class="text-sm leading-relaxed text-brand-gray/80">
+              2026年2月に生成AIパスポートを取得。著作権・AIガイドラインを理解した上で、生成AIを制作に活用しています。
+            </p>
+            <p class="text-xs leading-relaxed text-brand-gray/60 italic">
+              Certified in February 2026. I use generative AI in my creative practice with an understanding of copyright and AI-related guidelines.
+            </p>
+          </div>
+        </div>
+
+        <div x-show="expanded" x-cloak x-collapse class="space-y-6 pt-4 border-t border-brand-gray/10 text-sm text-brand-gray/75 leading-relaxed max-w-2xl">
+          <div class="space-y-4">
+            <p>漫画家・作家として、私は生成AI（機械学習技術）を含む新しいツールに向き合うとき、「最終的な表現の責任は人間が負う」という立場を大切にしています。便利さだけで無条件に受け入れるのではなく、作品ごとに必要性を見極め、自分の判断で使います。</p>
+            <p>私の創作活動は、かつての「無断転載（右クリック）禁止」論争を含む、インターネットとの関係の変化の中で続いてきました。生成AIによる学習やデータ活用に抵抗を覚えた時期もありますが、今は「何を使ったか」だけでなく、「誰がどう判断し、どのような表現として仕上げたか」が大切だと考えています。</p>
+            <p>私は「人工知能関連技術の研究開発及び活用の推進に関する法律（AI新法）」や「AI事業者ガイドライン」などを確認し、著作権・知的財産・個人情報を含む関連法令を遵守しながら、その趣旨に沿って制作と運用を行っています。人間中心、安全性、透明性、アカウンタビリティといった考え方は、私が作品づくりで大切にしている姿勢とも重なっています。</p>
+            <p>使用技術の透明性も大切にしています。現在はコミカライズの仕事が増えたため、コミックス巻末での個別明記は行っていませんが、公式サイトで自分の立場を明確にしています。個人のオリジナル作品では、これまでどおり使用ツールの明記を続けています。使用記録を残し続けることが、賛否の中で開発を続ける開発者がよりよい開発を行う手掛かりになると信じているからです。</p>
+            <p>私はこれからも、法令や指針を踏まえつつ、多様なツールを適切に選び、人間の創造性と責任を中心に据えた形で創作を続けていきます。これが、私の「生成AIに対するスタンス」です。</p>
+          </div>
+
+          <div class="pt-6 border-t border-brand-gray/10 space-y-4">
+            <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-pink-accent">My Stance on Generative AI</h4>
+            <p class="italic text-brand-ink font-bold">"No matter what technology is used, the final expression is shaped by human individuality and judgment."</p>
+            <p>As a manga artist and writer, when I work with new tools, including generative AI and other machine-learning technologies, I hold to one principle above all: the final responsibility for expression rests with a human being. I do not adopt tools uncritically for convenience alone. I consider what each work truly requires, and I choose accordingly.</p>
+            <p>My creative practice has continued through changing relationships between creators and the internet, including earlier debates over unauthorized reposting and attempts to prohibit right-click saving. There was also a time when I myself felt resistance to the learning and data-use aspects of generative AI. For that reason, I do not see this issue as a simple matter of endorsing technology. What matters to me is not only what tools were used, but who made the decisions, how those decisions were made, and how the work was ultimately shaped as an expression.</p>
+            <p>I review the relevant Japanese legal and policy frameworks, including the Act on the Promotion of Research, Development, and Utilization of Artificial Intelligence-Related Technologies (AI Act) and the AI Business Guidelines, and I conduct my work in compliance with applicable laws concerning copyright, intellectual property, and personal information, while also respecting the intent of those frameworks. The principles emphasized there, such as human-centered use, safety, transparency, and accountability, closely overlap with the values I consider essential in creative work.</p>
+            <p>I also value transparency about the tools I use. As adaptation work has become a larger part of my professional practice, I no longer list each tool individually in the afterword of every comic volume; instead, I clearly state my position on my official website. For my own original works, however, I continue to disclose the tools I use. I believe that continuing to keep such records can offer meaningful guidance to developers who continue their work amid both support and criticism, and can help encourage better, more responsible development.</p>
+            <p>Going forward, I will continue to choose tools carefully, in light of the law and relevant guidelines, while keeping human creativity and human responsibility at the center of my work. This is my stance on generative AI.</p>
+          </div>
+        </div>
+
+        <button @click="expanded = !expanded" class="text-[10px] font-bold tracking-widest uppercase text-brand-pink-accent hover:text-brand-ink border-b border-brand-pink-accent/40 pb-1">
+          <span x-text="expanded ? 'Read Less' : 'Read Full Statement'"></span>
+        </button>
+      </div>
+
+      <div class="mt-10 md:mt-0 flex justify-center md:justify-end">
+        <figure class="w-4/5 md:w-full max-w-[340px] md:max-w-[420px] -mb-16 md:-mb-28">
+          <img
+            src="/images/home/lab-desk-sketch.webp"
+            alt="氷堂リョージの仕事場のスケッチ。複数モニターとペンタブに向かい、頭上に蛾がいる。"
+            class="w-full aspect-square object-contain opacity-90 pointer-events-none"
+          />
+          <figcaption class="mt-1 text-right text-[10px] font-mono tracking-wide text-brand-gray/40">
+            fig.02 — 仕事場のようす（自画像）
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Bridge (a) -->
+    <p class="text-sm text-brand-gray/50 max-w-xl border-l-2 border-brand-pink-accent/40 pl-4">
+      ここまでは考え方の話。ここから先は、手を動かした結果です。
+    </p>
+
+    <!-- GitHub tools -->
+    <div class="relative z-10 space-y-8">
+      <h3 class="text-[10px] font-bold tracking-[0.25em] uppercase text-brand-pink-accent/90">仕事場から生まれた道具たち</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {tools.map((tool) => (
+          <div class="rounded-xl border border-brand-gray/10 bg-white p-5 space-y-3 hover:border-brand-pink-accent/40 transition-colors">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-semibold text-brand-ink">{tool.name}</span>
+              <span class="text-[9px] tracking-widest uppercase text-brand-gray/40 border border-brand-gray/15 rounded px-1.5 py-0.5">{tool.lang}</span>
+            </div>
+            <p class="text-xs text-brand-gray/70 leading-relaxed">{tool.line}</p>
+            <div class="flex gap-4 text-[10px] tracking-widest uppercase pt-1">
+              <a href={tool.gh} target="_blank" rel="noopener noreferrer" class="text-brand-pink-accent hover:text-brand-ink border-b border-brand-pink-accent/40">GitHub</a>
+              {tool.note && (
+                <a href={tool.note} target="_blank" rel="noopener noreferrer" class="text-brand-gray/50 hover:text-brand-ink border-b border-brand-gray/20">note</a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Bridge (b) -->
+    <p class="text-sm text-brand-gray/50 max-w-xl border-l-2 border-brand-pink-accent/40 pl-4">
+      うまくいった話も、うまくいかなかった話も、noteに残しています。
+    </p>
+
+    <!-- note record -->
+    <div class="space-y-6">
+      <h3 class="text-[10px] font-bold tracking-[0.25em] uppercase text-brand-pink-accent/90">記録 / Field Notes</h3>
+
+      <a
+        href="https://note.com/ryojihido/n/n7d30b0221e47"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block rounded-xl border border-brand-pink-accent/30 bg-white p-5 hover:border-brand-pink-accent/60 transition-colors"
+      >
+        <span class="text-[9px] font-bold tracking-widest uppercase text-brand-pink-accent">Pinned</span>
+        <p class="mt-2 text-sm text-brand-ink leading-relaxed">「何に使わないか」から決める：商業制作3年間の生成AI実務記録（ダイジェスト版）</p>
+      </a>
+
+      <ul class="space-y-3 text-sm">
+        {fieldNotes.map((note) => (
+          <li class="flex items-start gap-4">
+            <span class="shrink-0 text-[10px] text-brand-gray/40 pt-0.5 w-20">{note.date}</span>
+            <a href={note.url} target="_blank" rel="noopener noreferrer" class="text-brand-gray/75 hover:text-brand-pink-accent">{note.title}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

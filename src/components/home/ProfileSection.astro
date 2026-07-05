@@ -1,0 +1,62 @@
+---
+---
+
+<section id="profile" class="py-20 border-t border-brand-gray/10" x-data="{ lang: 'jp' }">
+  <div class="flex items-center justify-between mb-10">
+    <h2 class="text-sm font-bold tracking-[0.3em] uppercase text-brand-gray/50">Profile</h2>
+    <div class="flex gap-1 text-[10px] font-bold tracking-widest">
+      <button @click="lang = 'jp'" :class="lang === 'jp' ? 'text-brand-pink-accent border-brand-pink-accent' : 'text-brand-gray/40 border-transparent'" class="px-3 py-1 border-b-2 uppercase">JP</button>
+      <button @click="lang = 'en'" :class="lang === 'en' ? 'text-brand-pink-accent border-brand-pink-accent' : 'text-brand-gray/40 border-transparent'" class="px-3 py-1 border-b-2 uppercase">EN</button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-[140px,1fr] gap-8 items-start">
+    <div class="mx-auto md:mx-0">
+      <img
+        src="/images/profile/self-portrait.webp"
+        alt="氷堂リョージの自画像。頭上に蛾、肩にAIエージェント実機「スタックチャン」"
+        class="w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-2 border-brand-pink-accent/30 shadow-sm"
+      />
+    </div>
+
+    <div class="font-serif text-lg leading-relaxed text-gray-800">
+      <div x-show="lang === 'jp'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
+        <p class="mb-4">
+          <strong class="text-gray-900 text-2xl block mb-3 font-bold">氷堂リョージ (Ryoji Hido)</strong>
+          日本の漫画家。東洋大学文学部印度哲学科卒。<br />
+          氷堂涼二（ひどうりょうじ）名義と、氷堂リョージ名義の著書があります。「氷堂リョージ」は、中学生の頃から同人時代を通して使ってきた名前です。まんがくらぶの４コマ誌でデビューする際、「より大衆向けにしたい」という考えから、この名前を正式な著者名義にしました。以降の著書はすべてリョージ名義です。
+        </p>
+        <p class="mb-4">
+          また、一部の商業誌で紙版を出版できないタイトルを「著者制作版」としてKDPオンデマンド出版しています。少女マンガ、４コママンガ、エッセイマンガ、イラスト本など多岐にわたるジャンルを手掛けています。
+        </p>
+        <p>
+          禅宗系の中高出身のご縁で曹洞宗からの出版物もあります。
+        </p>
+      </div>
+
+      <div x-show="lang === 'en'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="text-base">
+        <p class="mb-4">
+          <strong class="text-gray-900 text-2xl block mb-3 font-bold">Ryoji Hido (氷堂リョージ)</strong>
+          Ryoji Hido is a Japanese manga artist and a graduate of Toyo University's Department of Indian Philosophy, Faculty of Letters. He publishes under two pen names that both romanize as "Ryoji Hido": one written in kanji (氷堂涼二), and one written in katakana (氷堂リョージ). The katakana form is the name he had already been using since his middle school and doujinshi days. When he made his commercial debut in the 4-panel manga magazine Manga Club, he adopted it as his official author name, wanting something that would reach a broader audience. All of his books since then have been published under that name.
+        </p>
+        <p class="mb-4">
+          Hido works across various genres including shoujo manga, 4-panel comics, essay manga, and illustration books. Some of his works that couldn't be published in print through traditional commercial magazines are now available as "author-produced editions" via KDP (Kindle Direct Publishing).
+        </p>
+        <p>
+          With a background in Zen Buddhism from his middle and high school years, Hido has also contributed to publications from the Soto Zen school of Buddhism.
+        </p>
+      </div>
+
+      <figure class="mt-8">
+        <div class="grid grid-cols-3 gap-2">
+          <img src="/images/profile/process-1-character-design.jpg" alt="キャラクター設定の断片" class="w-full aspect-square object-cover rounded-lg ring-1 ring-brand-gray/15 shadow-sm" />
+          <img src="/images/profile/process-2-blocking.jpg" alt="ポーズ・構図のブロッキングの断片" class="w-full aspect-square object-cover rounded-lg ring-1 ring-brand-gray/15 shadow-sm" />
+          <img src="/images/profile/process-3-name-rough.jpg" alt="ネームの断片" class="w-full aspect-square object-cover rounded-lg ring-1 ring-brand-gray/15 shadow-sm" />
+        </div>
+        <figcaption class="mt-2 text-[10px] font-mono tracking-wide text-brand-gray/45">
+          fig.01 — 『虫の皇女マユの旅』制作過程より：キャラ設定 → 構図のブロッキング → ネーム（作業ファイルの断片）
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,52 @@
+---
+const snsLinks = [
+  { name: 'X', url: 'https://x.com/ryojihido', icon: '/images/sns/X_logo.svg' },
+  { name: 'Instagram', url: 'https://www.instagram.com/ryojihido/', icon: '/images/sns/Instagram.svg' },
+  { name: 'note', url: 'https://note.com/ryojihido', icon: '/images/sns/note.svg' },
+  { name: 'Substack', url: 'https://rhworks.substack.com/', icon: '/images/sns/Substack.svg' },
+  { name: 'Amazon', url: 'https://www.amazon.co.jp/stores/author/B00S91FLGK', icon: '/images/sns/Amazon.svg' },
+  { name: 'GitHub', url: 'https://github.com/ryojihido', icon: '/images/sns/Github.svg' },
+];
+---
+
+<header class="pt-20 md:pt-28 pb-16 text-center md:text-left">
+  <div class="inline-flex items-center gap-2 pb-2 mb-6 text-[10px] font-bold tracking-[0.25em] uppercase text-brand-gray/60 border-b border-brand-pink-accent/50">
+    Manga Artist / Illustrator
+  </div>
+
+  <h1 class="text-5xl md:text-7xl font-serif font-bold tracking-tight text-gray-900">
+    RHworks
+  </h1>
+  <p class="mt-3 text-xs md:text-sm font-mono tracking-[0.2em] text-brand-gray/50 uppercase">
+    氷堂リョージ — Ryoji Hido
+  </p>
+
+  <p class="mt-8 max-w-2xl mx-auto md:mx-0 text-lg md:text-xl font-serif leading-relaxed text-gray-800">
+    少女マンガからエッセイ、4コマまで描く漫画家です。<br class="hidden sm:block" />
+    調べて、覚えて、足りない道具は、自分で作ります。
+  </p>
+
+  <div class="mt-10 flex flex-wrap justify-center md:justify-start gap-3">
+    {snsLinks.map((link) => (
+      <a
+        href={link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={link.name}
+        class:list={[
+          'group w-11 h-11 flex items-center justify-center border border-brand-gray/15 rounded-full hover:border-brand-pink-accent transition-all duration-300 shadow-sm overflow-hidden',
+          link.name === 'X' ? 'bg-brand-ink' : 'bg-white',
+        ]}
+      >
+        <img
+          src={link.icon}
+          alt={link.name}
+          class:list={[
+            'w-full h-full object-contain p-2.5 transition-opacity',
+            link.name === 'X' ? 'opacity-90 group-hover:opacity-100' : 'opacity-50 group-hover:opacity-100',
+          ]}
+        />
+      </a>
+    ))}
+  </div>
+</header>

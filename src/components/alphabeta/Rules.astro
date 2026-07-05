@@ -1,20 +1,23 @@
 ---
 const rules = [
-  { item: "商用利用", status: "NG", detail: "営利目的（収益化、広告、販売等）での利用は禁止です。" },
-  { item: "AI学習", status: "NG", detail: "再配布を目的としたモデル化（LoRA等）は禁止されています。" },
-  { item: "二次創作", status: "OK", detail: "非営利の範囲であれば、SNS投稿やファンアートを歓迎します。" },
-  { item: "再配布", status: "NG", detail: "素材そのものの再配布・転売は禁止です。" }
+  { item: "二次創作", status: "OK", detail: "非営利であれば、生成・アレンジ・SNS投稿・ファンアートまで自由です。" },
+  { item: "商用利用", status: "NG", detail: "営利目的（収益化・広告・販売等）での利用は禁止です。商用をご希望の場合のみ、別途許諾が必要です。" },
+  { item: "再配布", status: "NG", detail: "素材そのものの再配布・転売は禁止です。あなたが生成した画像のSNS投稿は再配布にあたりません。" },
+  { item: "AI学習", status: "NG", detail: "画像を読み込ませて生成するのは自由です。禁止されるのは、再配布を目的としたモデル化（LoRA等）・データセット化です。" }
 ];
 ---
 <section id="rules" class="py-20 bg-brand-beige">
   <div class="container mx-auto px-8 max-w-3xl">
-    <h2 class="text-sm font-bold tracking-[0.3em] uppercase text-brand-pink-accent/80 mb-8">Rules (Quick Reference)</h2>
+    <h2 class="text-sm font-bold tracking-[0.3em] uppercase text-brand-pink-accent/80 mb-4">Rules (Quick Reference)</h2>
+    <h3 class="text-2xl md:text-3xl font-serif font-bold text-gray-900 italic mb-10">
+      基本は、自由。<br class="sm:hidden" />先に押さえるのは3つだけ。
+    </h3>
     <div class="bg-white/50 backdrop-blur-sm rounded-3xl border border-brand-pink/20 overflow-hidden shadow-sm">
       <div class="divide-y divide-brand-pink/10">
         {rules.map(rule => (
-          <div class="flex flex-col sm:flex-row sm:items-center p-6 gap-4">
+          <div class={`flex flex-col sm:flex-row sm:items-center p-6 gap-4 ${rule.status === 'OK' ? 'bg-green-50/60' : ''}`}>
             <div class="flex items-center gap-4 sm:w-1/3">
-              <span class={`px-3 py-1 text-[10px] font-bold rounded-full ${rule.status === 'OK' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+              <span class={`px-3 py-1 text-[10px] font-bold rounded-full ${rule.status === 'OK' ? 'bg-green-600 text-white' : 'bg-red-100 text-red-700'}`}>
                 {rule.status}
               </span>
               <span class="font-bold text-gray-900">{rule.item}</span>

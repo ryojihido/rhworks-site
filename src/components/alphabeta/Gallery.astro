@@ -4,6 +4,7 @@ interface GalleryItem {
   title: string;
   thumb: string;
   image: string;
+  video?: string;
   tools: string[];
   category: string;
   summary: string;
@@ -75,17 +76,69 @@ const items: GalleryItem[] = [
       "Notebook & Tech scattering"
     ],
     promptExample: "Top-down view of Alpha in claymation style, tactile material textures, lying on wood floor, notebooks and headphones scattered around, high detail 3D render.",
+  },
+  {
+    id: "05",
+    title: "α & β - 私服アレンジで歩く未来都市",
+    thumb: "/images/alphabeta/gallery/thumb_05.webp",
+    image: "/images/alphabeta/gallery/05.webp",
+    tools: ["ChatGPT"],
+    category: "Outfit Arrange",
+    summary: "公式衣装から私服（パーカー等）への着せ替え。キャラクターの特徴を保ったまま、衣装と舞台を指示（プロンプト）によって生成。",
+    promptNote: [
+      "Casual outfit swap",
+      "Identity consistency",
+      "Digital city",
+      "Low-angle walk"
+    ],
+    promptExample: "Alpha and Beta walking through a futuristic digital city, casual streetwear outfits with a sling bag, low-angle shot, cyberpunk neon signage, keep character identity consistent.",
+  },
+  {
+    id: "06",
+    title: "α & β - 技術解説インフォグラフィック",
+    thumb: "/images/alphabeta/gallery/thumb_06.webp",
+    image: "/images/alphabeta/gallery/06.webp",
+    tools: ["ChatGPT"],
+    category: "Educational Use",
+    summary: "αとβを案内役にした『Transformerのしくみ』解説図。図解の構成とセリフ回しを指示（プロンプト）によって生成。キャラクターを自作の解説コンテンツに起用する実例。",
+    promptNote: [
+      "Infographic layout",
+      "Character as guide",
+      "Technical diagram",
+      "Speech bubbles"
+    ],
+    promptExample: "Create a Japanese educational infographic explaining the Transformer architecture, with Alpha and Beta as friendly guide characters flanking the diagram, speech bubbles, clean flat illustration style.",
+  },
+  {
+    id: "07",
+    title: "継承体α - クレイアニメ風アニメーション",
+    thumb: "/images/alphabeta/gallery/thumb_07.webp",
+    image: "/images/alphabeta/gallery/07-poster.webp",
+    video: "/images/alphabeta/gallery/07.mp4",
+    tools: ["Grok"],
+    category: "Motion Test",
+    summary: "04のクレイアニメ風表現の発展形。静止画から森を歩くループアニメーションへ、動きの指示（プロンプト）によって生成。",
+    promptNote: [
+      "Claymation style",
+      "Walk cycle",
+      "Forest scene",
+      "Seamless loop"
+    ],
+    promptExample: "Turn Alpha into a claymation-style character walking through a sunlit forest path, tactile clay textures, backpack, seamless walk-cycle loop animation, soft cinematic lighting.",
   }
 ];
 ---
 
-<section class="py-24 bg-brand-beige overflow-hidden">
+<section id="gallery" class="py-24 bg-brand-beige overflow-hidden">
   <div class="container mx-auto px-8" x-data="{ open: false, activeItem: null }">
     <div class="mb-16">
       <h2 class="text-sm font-bold tracking-[0.3em] uppercase text-brand-pink-accent/80 mb-4 text-center md:text-left">Gallery</h2>
       <h3 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 italic text-center md:text-left">
         AIとの対話が生む、<br class="md:hidden" />新しい視覚言語の断片
       </h3>
+      <p class="mt-4 text-sm text-brand-gray/60 text-center md:text-left">
+        すべて配布画像を読み込ませて作った実例です。プロンプトの記録つき。
+      </p>
     </div>
 
     <!-- Gallery Grid -->
@@ -95,11 +148,17 @@ const items: GalleryItem[] = [
           @click={`activeItem = ${JSON.stringify(item)}; open = true`}
           class="group relative aspect-square rounded-[2rem] overflow-hidden bg-brand-pink/5 border border-brand-pink/10 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 text-left"
         >
-          <img 
-            src={item.thumb} 
-            alt={item.title} 
+          <img
+            src={item.thumb}
+            alt={item.title}
             class="w-full h-full object-cover grayscale brightness-110 group-hover:grayscale-0 group-hover:scale-110 group-hover:brightness-100 transition-all duration-700"
           />
+          {item.video && (
+            <span class="absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1 text-[9px] font-bold tracking-widest text-white uppercase backdrop-blur-sm">
+              <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+              Motion
+            </span>
+          )}
           <div class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
             <span class="text-[10px] font-bold tracking-widest text-brand-pink/60 uppercase mb-1 block">{item.category}</span>
             <h4 class="text-white font-serif font-bold text-sm italic line-clamp-1">{item.title}</h4>
@@ -136,9 +195,22 @@ const items: GalleryItem[] = [
 
           <!-- Image Area -->
           <div class="flex-1 bg-black flex items-center justify-center p-4">
-            <img 
-              :src="activeItem?.image" 
-              :alt="activeItem?.title" 
+            <video
+              x-show="activeItem?.video"
+              :src="activeItem?.video"
+              :poster="activeItem?.image"
+              :aria-label="activeItem?.title"
+              class="max-w-full max-h-full object-contain rounded-xl"
+              controls
+              loop
+              muted
+              autoplay
+              playsinline
+            ></video>
+            <img
+              x-show="!activeItem?.video"
+              :src="activeItem?.image"
+              :alt="activeItem?.title"
               class="max-w-full max-h-full object-contain rounded-xl"
             />
           </div>
