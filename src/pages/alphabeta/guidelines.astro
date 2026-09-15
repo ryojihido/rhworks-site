@@ -34,9 +34,13 @@ import Layout from '../../layouts/Layout.astro';
         αβ利用規約
       </h1>
       <div class="flex flex-wrap gap-4 text-[10px] font-bold tracking-widest uppercase text-brand-gray/40">
-        <span>Version 1.1</span>
+        <span>Version 2.0</span>
         <span>/</span>
-        <span>Last Updated: 2025-12-13</span>
+        <span>Revised: 2026-09-15</span>
+      </div>
+      <div class="mt-6 rounded-2xl border border-brand-pink/20 bg-brand-surface p-6 text-sm leading-relaxed text-brand-gray/80">
+        <p x-show="lang === 'jp'">v2.0の追加デザインを配布対象に含め、AIサービスへの入力、第三者の権利、免責、規約改定の扱いを明確にしました。個人の非商用利用を基本とする方針は変わりません。</p>
+        <p x-show="lang === 'en'" x-cloak>Version 2.0 covers the additional designs and clarifies AI service input, third-party rights, liability, and revisions. The policy of personal, non-commercial use remains unchanged.</p>
       </div>
     </header>
 
@@ -47,7 +51,9 @@ import Layout from '../../layouts/Layout.astro';
         <li><a href="#summary" class="hover:text-brand-pink-accent transition-colors" x-text="lang === 'jp' ? '規約の概要' : 'Summary'">規約の概要</a></li>
         <li><a href="#rules" class="hover:text-brand-pink-accent transition-colors" x-text="lang === 'jp' ? '詳細ルール (OK/NG)' : 'Detailed Rules'">詳細ルール (OK/NG)</a></li>
         <li><a href="#commercial" class="hover:text-brand-pink-accent transition-colors" x-text="lang === 'jp' ? '商用利用の定義' : 'Commercial Use Definition'">商用利用の定義</a></li>
+        <li><a href="#ai" class="hover:text-brand-pink-accent transition-colors" x-text="lang === 'jp' ? '生成AIへの入力と公開' : 'AI Input & Publication'">生成AIへの入力と公開</a></li>
         <li><a href="#rights" class="hover:text-brand-pink-accent transition-colors" x-text="lang === 'jp' ? '権利と免責事項' : 'Rights & Disclaimer'">権利と免責事項</a></li>
+        <li><a href="#revisions" class="hover:text-brand-pink-accent transition-colors" x-text="lang === 'jp' ? '適用と規約の改定' : 'Application & Revisions'">適用と規約の改定</a></li>
       </ul>
     </nav>
 
@@ -58,17 +64,19 @@ import Layout from '../../layouts/Layout.astro';
       <section id="summary" class="scroll-mt-20">
         <h2 class="text-2xl font-bold text-gray-900 mb-6" x-text="lang === 'jp' ? '規約の概要' : 'Summary'">規約の概要</h2>
         <div x-show="lang === 'jp'" class="space-y-4">
+          <p>本規約は、氷堂リョージがαβlabの配布素材として明示する画像・キャラクターデザインの利用条件です。キャラクター素材パックv2.0の既存画像4点と追加画像「ab_2p.png」に適用されます。ギャラリーの画像・動画など、配布素材として明示していない作品は対象外です。別の配布物に固有の条件がある場合は、その条件をご確認ください。</p>
           <p>
             可否の判断は、本規約に記載された内容が基準です。<br />
-            非商用での通常利用については、規約に反していない限り自由にご利用いただけます。<br />
+            個人の非商用での通常利用については、規約に反していない限り自由にご利用いただけます。<br />
             ※通常利用に関する個別の可否判断や事前確認にはお答えしておりません。<br />
             ※商用利用を希望される場合は、別途許諾が必要です。内容に応じて個別相談を受ける場合があります。
           </p>
         </div>
         <div x-show="lang === 'en'" class="space-y-4">
+          <p>These terms govern the images and character designs expressly offered by Ryoji Hido as αβlab distribution materials. They apply to the four existing images and the additional image, ab_2p.png, in Character Pack v2.0. Gallery images, videos, and other works not designated as distribution materials are excluded. Separate downloads may have their own specific conditions; please check those conditions.</p>
           <p>
             Decisions regarding permitted use are based on the contents of these guidelines.<br />
-            Standard non-commercial use is free as long as it does not violate the terms.<br />
+            Standard personal, non-commercial use is free as long as it does not violate the terms.<br />
             *We do not respond to individual inquiries or requests for prior confirmation regarding standard use.<br />
             *Separate permission is required for commercial use. We may consider individual consultations depending on the nature of the request.
           </p>
@@ -85,14 +93,16 @@ import Layout from '../../layouts/Layout.astro';
               <span class="text-xl">✓</span> OK
             </h3>
             <ul x-show="lang === 'jp'" class="text-sm space-y-2 text-green-800/80">
-              <li>個人が生成AIに読み込ませて生成する（非商用）</li>
-              <li>生成した画像をSNSへ投稿する</li>
-              <li>非営利目的の二次創作・ファンアート</li>
+              <li>個人が生成AIに読み込ませて画像・動画を生成する（非商用）</li>
+              <li>個人が生成・制作した作品をSNSへ投稿する（非商用）</li>
+              <li>個人の非商用でのアレンジ・二次創作・ファンアート</li>
+              <li>公式配布ページへのリンク共有</li>
             </ul>
             <ul x-show="lang === 'en'" class="text-sm space-y-2 text-green-800/80">
-              <li>Individuals using AI tools to generate images (Non-commercial)</li>
-              <li>Posting generated results on social media</li>
-              <li>Non-commercial fan art and derivative works</li>
+              <li>Individuals generating images and videos with AI (non-commercial)</li>
+              <li>Individuals posting their generated or created works on social media (non-commercial)</li>
+              <li>Personal, non-commercial modifications, fan art, and derivative works</li>
+              <li>Sharing links to the official download page</li>
             </ul>
           </div>
           <!-- NG -->
@@ -106,13 +116,15 @@ import Layout from '../../layouts/Layout.astro';
               <li>差別・暴力・性的・政治目的の利用</li>
               <li>素材そのものの再配布・転売</li>
               <li>再配布目的のモデル化（LoRA等）やデータセット化</li>
+              <li>第三者の著作権・商標権・肖像・プライバシー等の権利を侵害する利用</li>
             </ul>
             <ul x-show="lang === 'en'" class="text-sm space-y-2 text-red-800/80">
               <li>Violating public order, morals, or reputation</li>
               <li>Impersonation / Claiming character as your own</li>
               <li>Discrimination, violence, sexual, or political use</li>
-              <li>Redistributing original distributed files</li>
+              <li>Redistributing or reselling the original materials</li>
               <li>Creating models (LoRA, etc.) or datasets for redistribution</li>
+              <li>Infringing third-party copyright, trademark, likeness, privacy, or other rights</li>
             </ul>
           </div>
         </div>
@@ -138,6 +150,22 @@ import Layout from '../../layouts/Layout.astro';
         </div>
       </section>
 
+      <section id="ai" class="scroll-mt-20">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6" x-text="lang === 'jp' ? '生成AIへの入力と公開' : 'AI Input & Publication'">生成AIへの入力と公開</h2>
+        <div x-show="lang === 'jp'" class="space-y-4 text-sm text-brand-gray/80">
+          <p>個人の非商用で画像・動画を生成するため、配布画像を生成AIサービスへ入力することを許可します。その入力に伴い、サービスの利用規約に従って運営者が入力データを保存・学習・改善に利用することも、原案者が許諾できる権利の範囲で認めます。これは、利用者が再配布目的でLoRA・Checkpoint等のモデルやデータセットを作成したり、公開・配布したりする許可ではありません。</p>
+          <p>利用するサービスの規約、入力データの公開範囲・学習設定、生成物の利用条件を確認してください。他人の画像、キャラクター、音声、個人情報等を組み合わせる場合、その入力・利用に必要な権利や同意は別途確認してください。本規約は第三者の権利を許諾するものではありません。</p>
+          <p>公開前には、生成物が第三者の作品や実在人物などの権利を侵害しないか、利用者自身が確認してください。生成できたことだけで、公開・利用が適法になるわけではありません。AIを使用した旨の表示は、適用法令や投稿先のルールで必要な場合に行ってください。原案者自身の作品・発言や公式の推薦と誤認させる表示はしないでください。</p>
+          <p>生成過程を確認できるよう、使用した素材・ツール・プロンプト等の記録を手元に残すことをおすすめします。クレジット「キャラクター原案：氷堂リョージ / αβlab」やハッシュタグ「#αβlab」の表示は任意です。</p>
+        </div>
+        <div x-show="lang === 'en'" class="space-y-4 text-sm text-brand-gray/80">
+          <p>You may input the distributed images into generative AI services to create images and videos for personal, non-commercial use. Within the rights the original creator can license, this also permits the service operator to store and use that input for training and improvement under its service terms. This does not permit users to create models such as LoRA or Checkpoint files, or datasets, for redistribution, or to publish or distribute those models or datasets.</p>
+          <p>Check the service terms, input visibility and training settings, and output usage conditions. When combining other people's images, characters, voices, personal information, or other material, separately check the rights and consent needed for that input and use. These terms do not license third-party rights.</p>
+          <p>Before publication, review the output yourself for infringement of rights in third-party works, real people's likenesses, and other protected interests. Successful generation alone does not make publication or use lawful. Disclose AI use where required by applicable law or the platform's rules. Do not imply that your work or statements were created by the original creator or officially endorsed.</p>
+          <p>We recommend keeping a record of source materials, tools, prompts, and other creation details. Credit such as “Original character designs: Ryoji Hido / αβlab” and the hashtag #αβlab are optional.</p>
+        </div>
+      </section>
+
       <!-- Rights and Disclaimer section -->
       <section id="rights" class="scroll-mt-20">
         <h2 class="text-2xl font-bold text-gray-900 mb-6" x-text="lang === 'jp' ? '権利と免責事項' : 'Rights & Disclaimer'">権利と免責事項</h2>
@@ -148,11 +176,11 @@ import Layout from '../../layouts/Layout.astro';
           </div>
           <div class="space-y-2">
             <h4 class="font-bold text-gray-900">権利留保</h4>
-            <p>αβの原案デザインに関する権利は、原案者（氷堂リョージ）に留保されます。</p>
+            <p>αβの原案デザインおよび配布画像について原案者（氷堂リョージ）が有する権利は、原案者に留保されます。本規約はその範囲内での非独占的な利用許諾であり、著作権の譲渡ではありません。法令上、権利者の許諾を要しない利用については、当該法令の定めに従います。</p>
           </div>
           <div class="space-y-2">
             <h4 class="font-bold text-gray-900">免責事項</h4>
-            <p>利用により生じたトラブルについて、原案者は一切の責任を負いかねます。</p>
+            <p>配布素材が特定の生成AIサービスで動作することや、希望する結果が得られることは保証しません。利用に伴う損害についての原案者の責任は、民法・消費者契約法その他の適用法令に従います。本規約は、原案者の故意・過失による責任を一律に免除するものではなく、法令上制限できない利用者の権利を制限しません。</p>
           </div>
         </div>
         <div x-show="lang === 'en'" class="space-y-6 text-sm text-brand-gray/80">
@@ -161,13 +189,27 @@ import Layout from '../../layouts/Layout.astro';
             <p>Copyright status of generated works depends on laws and processes. The original creator makes no guarantees; please use at your own responsibility.</p>
           </div>
           <div class="space-y-2">
-            <h4 class="font-bold text-gray-900">Rights Observed</h4>
-            <p>All rights related to original designs are reserved by the original creator (Ryoji Hido).</p>
+            <h4 class="font-bold text-gray-900">Rights Reserved</h4>
+            <p>Rights held by Ryoji Hido in the original αβ designs and distributed images remain with the original creator. These terms grant a non-exclusive license within those rights, not a transfer of copyright. Uses that do not require the rights holder's permission under applicable law are governed by that law.</p>
           </div>
           <div class="space-y-2">
             <h4 class="font-bold text-gray-900">Disclaimer</h4>
-            <p>The original creator is not responsible for any disputes or damages arising from use.</p>
+            <p>Compatibility with a particular AI service and desired results are not guaranteed. The original creator's liability for damages is governed by applicable law, including Japan's Civil Code and Consumer Contract Act where applicable. These terms do not provide a blanket exemption for liability arising from the creator's intent or negligence, or restrict user rights that cannot lawfully be restricted.</p>
           </div>
+        </div>
+      </section>
+
+      <section id="revisions" class="scroll-mt-20">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6" x-text="lang === 'jp' ? '適用と規約の改定' : 'Application & Revisions'">適用と規約の改定</h2>
+        <div x-show="lang === 'jp'" class="space-y-4 text-sm text-brand-gray/80">
+          <p>本版は、キャラクター素材パックv2.0の公開時から、本版を示して配布する素材のダウンロード・利用に適用します。ダウンロード前に本規約を確認し、同意のうえご利用ください。パックには本版の全文を同梱しています。</p>
+          <p>旧版で許可された利用を、今回の改定だけを理由にさかのぼって禁止することはありません。今後の改定は、変更内容と適用開始時期をサイト上で周知します。既存の利用への変更は、利用者の同意を得るか、民法第548条の4などの適用法令に従う場合に限ります。</p>
+          <p>日本語版と英語版で解釈が異なる場合は、日本語版を基準とします。ただし、適用される強行法規による利用者の保護を妨げるものではありません。</p>
+        </div>
+        <div x-show="lang === 'en'" class="space-y-4 text-sm text-brand-gray/80">
+          <p>From the public release of Character Pack v2.0, this version applies to downloads and use of materials offered under it. Read and agree to these terms before downloading and using the materials. The full text of this version is included in the pack.</p>
+          <p>This revision alone does not retroactively prohibit uses permitted under an earlier version. Future revisions will be announced on the website with their content and effective timing. Changes to existing use require user consent or compliance with applicable law, such as Article 548-4 of Japan's Civil Code.</p>
+          <p>If the Japanese and English versions differ in interpretation, the Japanese version controls, without prejudice to user protections under applicable mandatory law.</p>
         </div>
       </section>
 

@@ -125,6 +125,22 @@ const items: GalleryItem[] = [
       "Seamless loop"
     ],
     promptExample: "Turn Alpha into a claymation-style character walking through a sunlit forest path, tactile clay textures, backpack, seamless walk-cycle loop animation, soft cinematic lighting.",
+  },
+  {
+    id: "08",
+    title: "α & β - 手を振って駆け寄るα",
+    thumb: "/images/alphabeta/gallery/thumb_08.webp",
+    image: "/images/alphabeta/gallery/08-poster.webp",
+    video: "/images/alphabeta/gallery/08.mp4",
+    tools: ["Gemini Omni 1.1 Flash", "Irodori-TTS（Reference:α/β）"],
+    category: "Image to Video",
+    summary: "一枚絵からの動画生成。Gemini Omni 1.1 Flashで、未来都市を舞台にαが笑顔で手を振って駆け寄る映像へ。Irodori-TTS（Reference:α/β）による音声を合わせています。音声はプレイヤーのミュートを解除してお楽しみください。",
+    promptNote: [
+      "一枚絵からの動画生成",
+      "笑顔で手を振って駆け寄るα",
+      "αとβのキャラクターデザイン",
+      "音声：Irodori-TTS（Reference:α/β）"
+    ],
   }
 ];
 ---
@@ -137,7 +153,7 @@ const items: GalleryItem[] = [
         AIとの対話が生む、<br class="md:hidden" />新しい視覚言語の断片
       </h3>
       <p class="mt-4 text-sm text-brand-gray/60 text-center md:text-left">
-        すべて配布画像を読み込ませて作った実例です。プロンプトの記録つき。
+        配布キャラクターを使った画像・動画の実例です。使用ツールと制作メモを紹介しています。
       </p>
     </div>
 
@@ -188,25 +204,27 @@ const items: GalleryItem[] = [
           <!-- Close Button -->
           <button 
             @click="open = false"
-            class="absolute top-6 right-6 z-10 p-4 rounded-full bg-white/10 hover:bg-white/20 text-brand-beige border border-white/20 transition-all hover:scale-110"
+            aria-label="ギャラリーを閉じる"
+            class="absolute top-4 right-4 z-10 p-3 rounded-full bg-brand-gray/90 hover:bg-brand-gray text-white border border-white/20 transition-all hover:scale-110"
           >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
 
           <!-- Image Area -->
-          <div class="flex-1 bg-black flex items-center justify-center p-4">
-            <video
-              x-show="activeItem?.video"
-              :src="activeItem?.video"
-              :poster="activeItem?.image"
-              :aria-label="activeItem?.title"
-              class="max-w-full max-h-full object-contain rounded-xl"
-              controls
-              loop
-              muted
-              autoplay
-              playsinline
-            ></video>
+          <div class="min-h-0 flex-1 bg-black flex items-center justify-center p-4">
+            <template x-if="open && activeItem?.video">
+              <video
+                :src="activeItem.video"
+                :poster="activeItem.image"
+                :aria-label="activeItem.title"
+                class="max-w-full max-h-[40vh] md:max-h-[80vh] object-contain rounded-xl"
+                controls
+                loop
+                muted
+                autoplay
+                playsinline
+              ></video>
+            </template>
             <img
               x-show="!activeItem?.video"
               :src="activeItem?.image"
@@ -219,7 +237,7 @@ const items: GalleryItem[] = [
           <div class="w-full md:w-[400px] bg-brand-beige p-8 md:p-12 overflow-y-auto font-serif italic text-brand-gray">
             <div class="space-y-8">
               <div>
-                <h2 class="text-3xl font-bold text-gray-900 leading-tight mb-4" x-text="activeItem?.title">Title</h2>
+                <h2 class="text-3xl font-bold text-gray-900 leading-tight mb-4 pr-8" x-text="activeItem?.title">Title</h2>
                 <div class="flex flex-wrap gap-2">
                   <template x-for="tool in activeItem?.tools">
                     <span class="px-3 py-1 bg-brand-pink/10 rounded-full text-[10px] font-bold tracking-widest text-brand-pink-accent uppercase" x-text="tool">TOOL</span>
