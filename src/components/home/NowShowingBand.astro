@@ -1,0 +1,207 @@
+---
+import { featuredVideo, otherVideos } from '../../data/featuredVideo';
+
+const { work, youtube, theme } = featuredVideo;
+const themeStyle = `--ns-ink-from: ${theme.inkFrom}; --ns-ink-to: ${theme.inkTo}; --ns-gold: ${theme.gold};`;
+---
+
+<section
+  id="now-showing"
+  class="now-showing relative mb-4 overflow-hidden rounded-3xl px-5 py-6 md:px-10 md:py-9"
+  style={themeStyle}
+  x-data
+  data-now-showing
+>
+  <div class="flex items-center gap-4 font-mono text-[10px] font-bold uppercase tracking-[0.3em]">
+    <span class="ns-gold">{featuredVideo.label}</span>
+    <span class="relative h-px flex-1" aria-hidden="true">
+      <span class="ns-thread absolute inset-0"></span>
+      <span class="ns-diamond"></span>
+    </span>
+    <span class="ns-faint tracking-[0.2em]">{featuredVideo.kicker}</span>
+  </div>
+
+  <div class="mt-6 grid grid-cols-1 gap-5 md:mt-8 md:grid-cols-[minmax(0,1fr),auto] md:gap-8">
+    <div class="ns-title md:col-start-2 md:row-start-1">
+      <h2 class="font-serif text-2xl font-bold tracking-[0.08em] md:text-4xl md:tracking-[0.2em]">{work.title}</h2>
+      <p class="ns-gold mt-1 font-serif text-sm tracking-[0.3em] md:mt-0 md:mr-3 md:text-base">{featuredVideo.status}</p>
+    </div>
+
+    <button
+      type="button"
+      class="ns-frame group relative block w-full overflow-hidden rounded-xl bg-black md:col-start-1 md:row-start-1"
+      @click={`$dispatch('open-youtube', ${JSON.stringify(youtube)})`}
+      aria-label={`${youtube.title}を音ありで再生（${featuredVideo.durationLabel}）`}
+    >
+      <video
+        data-teaser
+        class="aspect-video w-full object-cover transition-transform duration-700 group-hover:scale-[1.02] motion-reduce:transform-none"
+        src={featuredVideo.teaserSrc}
+        poster={featuredVideo.posterSrc}
+        muted
+        loop
+        playsinline
+        preload="none"
+        aria-hidden="true"
+        tabindex="-1"
+      ></video>
+      <span class="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-black/55 px-3 py-1.5 text-[10px] font-bold tracking-widest backdrop-blur-sm md:bottom-4 md:left-4">
+        <svg class="h-3 w-3" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" /></svg>
+        <span class="hidden sm:inline">音を出して観る · </span>{featuredVideo.durationLabel}
+      </span>
+    </button>
+  </div>
+
+  <p class="ns-faint mt-4 text-xs font-serif tracking-wide">{featuredVideo.meta.join(' ／ ')}</p>
+
+  <div class="mt-5 flex flex-wrap items-center gap-x-6 gap-y-4">
+    <button
+      type="button"
+      class="ns-primary inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold tracking-widest transition-transform hover:-translate-y-0.5"
+      @click={`$dispatch('open-youtube', ${JSON.stringify(youtube)})`}
+    >
+      ♪ 音を出して観る（{featuredVideo.durationLabel}）
+    </button>
+    <button
+      type="button"
+      class="ns-link text-[11px] font-bold tracking-widest"
+      @click={`$dispatch('open-work-preview', ${JSON.stringify(work)})`}
+    >
+      試し読み
+    </button>
+    {work.takecomiUrl && (
+      <a href={work.takecomiUrl} target="_blank" rel="noopener noreferrer" class="ns-link text-[11px] font-bold tracking-widest">
+        竹コミ！で読む
+      </a>
+    )}
+    <a
+      href={work.url}
+      target="_blank"
+      rel={work.isAffiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'}
+      class="ns-link text-[11px] font-bold tracking-widest"
+    >
+      {work.ctaLabel}
+    </a>
+  </div>
+  {work.isAffiliate && (
+    <p class="ns-faint mt-3 text-[10px]">Amazonボタンにはアフィリエイトリンクを使用しています。</p>
+  )}
+
+  <div class="ns-divider mt-8 pt-5 sm:flex sm:items-start sm:gap-8">
+    <p class="ns-faint shrink-0 font-mono text-[10px] uppercase tracking-[0.25em] sm:w-28 sm:pt-1">Other Videos</p>
+    <ul class="mt-4 grid grid-cols-2 gap-4 sm:mt-0 sm:flex sm:flex-wrap sm:gap-5">
+      {otherVideos.map((video) => (
+        <li class="sm:w-48">
+          <button
+            type="button"
+            class="group block w-full text-left"
+            @click={`$dispatch('open-youtube', ${JSON.stringify({ id: video.id, title: video.title })})`}
+          >
+            <span class="ns-thumb relative block aspect-video overflow-hidden rounded-lg">
+              <img
+                src={video.thumbnail}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover brightness-90 transition duration-500 group-hover:scale-105 group-hover:brightness-100 motion-reduce:transform-none"
+              />
+              <span class="absolute bottom-1.5 left-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm" aria-hidden="true">
+                <svg class="ml-px h-2.5 w-2.5" viewBox="0 0 12 12" fill="currentColor"><path d="M3 1.5v9l7.5-4.5z" /></svg>
+              </span>
+            </span>
+            <span class="ns-other mt-2 block font-serif text-[11px] leading-snug line-clamp-2">{video.title}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  const band = document.querySelector('[data-now-showing]');
+  if (!(band instanceof HTMLElement)) throw new Error('NowShowingBand: [data-now-showing] が見つかりません');
+  const teaser = band.querySelector('[data-teaser]');
+  if (!(teaser instanceof HTMLVideoElement)) throw new Error('NowShowingBand: [data-teaser] の video が見つかりません');
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    if (!entries[0].isIntersecting) return;
+    band.classList.add('is-visible');
+    observer.disconnect();
+  }, { threshold: 0.3 });
+  revealObserver.observe(band);
+
+  // 動きを減らす設定の端末では自動再生せず、ポスター画像を見せる。
+  if (!reduceMotion) {
+    new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        teaser.play().catch((error) => {
+          // NotAllowedError: 低電力モードなどでブラウザが自動再生を拒否した（ポスターのまま止まる）。
+          // AbortError: 再生開始前にスクロールで画面外へ出て pause() された。
+          if (error.name !== 'NotAllowedError' && error.name !== 'AbortError') throw error;
+        });
+      } else {
+        teaser.pause();
+      }
+    }, { threshold: 0.4 }).observe(teaser);
+  }
+</script>
+
+<style>
+  .now-showing {
+    color: #f3ede2;
+    background:
+      radial-gradient(120% 90% at 15% 0%, color-mix(in srgb, var(--ns-gold) 12%, transparent), transparent 60%),
+      linear-gradient(135deg, var(--ns-ink-from), var(--ns-ink-to));
+  }
+  .ns-gold { color: var(--ns-gold); }
+  .ns-faint { color: rgb(243 237 226 / 0.65); }
+  .ns-frame {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--ns-gold) 35%, transparent),
+      0 24px 60px -24px rgb(0 0 0 / 0.7);
+  }
+  .ns-primary { background: var(--ns-gold); color: #1b1714; }
+  .ns-link {
+    color: rgb(243 237 226 / 0.75);
+    border-bottom: 1px solid color-mix(in srgb, var(--ns-gold) 45%, transparent);
+    padding-bottom: 2px;
+  }
+  .ns-link:hover, .ns-other:hover { color: var(--ns-gold); }
+  .ns-other { color: rgb(243 237 226 / 0.7); }
+  .ns-divider { border-top: 1px solid rgb(243 237 226 / 0.1); }
+  .ns-thumb { box-shadow: 0 0 0 1px color-mix(in srgb, var(--ns-gold) 25%, transparent); transition: box-shadow 0.3s; }
+  .group:hover .ns-thumb { box-shadow: 0 0 0 1px var(--ns-gold); }
+  .group:hover .ns-other { color: var(--ns-gold); }
+
+  @media (min-width: 768px) {
+    .ns-title { writing-mode: vertical-rl; }
+  }
+
+  /* 動画の金の罫線：帯が画面に入ったら左から引かれ、最後に中央の菱形が灯る */
+  .ns-thread {
+    background: linear-gradient(90deg, transparent, var(--ns-gold) 12%, var(--ns-gold) 88%, transparent);
+    opacity: 0.6;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .ns-diamond {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    background: var(--ns-gold);
+    transform: translate(-50%, -50%) rotate(45deg) scale(0);
+    transition: transform 0.5s ease 1.2s;
+  }
+  .now-showing.is-visible .ns-thread { transform: scaleX(1); }
+  .now-showing.is-visible .ns-diamond { transform: translate(-50%, -50%) rotate(45deg) scale(1); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ns-thread { transition: none; transform: scaleX(1); }
+    .ns-diamond { transition: none; transform: translate(-50%, -50%) rotate(45deg) scale(1); }
+  }
+</style>

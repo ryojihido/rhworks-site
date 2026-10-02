@@ -2,7 +2,12 @@
 import { works, featuredRecommendation } from '../../data/works';
 ---
 
-<section id="works" class="py-20 space-y-10" x-data="mangaPreviewPage()">
+<section
+  id="works"
+  class="py-20 space-y-10"
+  x-data="mangaPreviewPage()"
+  @open-work-preview.window="activeWork = $event.detail; openViewer()"
+>
   <div class="flex items-end justify-between border-b border-brand-gray/10 pb-4">
     <h2 class="text-sm font-bold tracking-[0.3em] uppercase text-brand-gray/50">Works</h2>
     <span class="text-[10px] font-mono text-brand-gray/40">{works.length} titles + latest</span>

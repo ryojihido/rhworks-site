@@ -192,13 +192,18 @@
 ### トップページ (`/`)
 
 1. **Hero** — 名前・キャッチ・SNSリンク
-2. **Profile** — JP/EN切り替えテキスト
-3. **Recommended** — フィーチャー作品カード（1点）
-4. **Selected Works** — 全作品グリッド + モーダル詳細
-5. **Featured Videos** — YouTube 埋め込み
-6. **My Stance on AI** — AIポリシー（折りたたみ）
-7. **αβlab Promo** — αβlabへのリンクカード
-8. **Contact / Location** — メール・所在地
+2. **Now Showing** — 宣伝動画の帯（`NowShowingBand.astro`）。中身は `src/data/featuredVideo.ts` で差し替える
+   - 無音ティザーを画面内でだけループ再生（`public/videos/featured/`）。`prefers-reduced-motion` ではポスター静止画のみ
+   - 音ありのフル版は YouTube。クリックで `YouTubeLightbox.astro` が開く
+   - 配色は帯の中だけの CSS 変数（`theme`）。動画の背景と金から拾う
+   - Other Videos はサムネイル（`public/images/videos/{id}.webp`）から同じウインドウで再生
+3. **Works** — Latest作品カード + 全作品グリッド + モーダル詳細 + 試し読みビューア（`open-work-preview` イベントで外からも開ける）
+4. **Profile** — JP/EN切り替えテキスト
+5. **Lab** — AIスタンス → 仕事場から生まれた道具たち → 記録 / Field Notes（Pinned + メンバーシップ）
+6. **αβlab Promo** — αβlabへのリンクカード
+7. **Contact** — メール・コピーボタン
+
+YouTube はどのセクションからでも `$dispatch('open-youtube', { id, title })` で共通ウインドウに開く（`YouTubeLightbox.astro` をページに1つ置く）。
 
 ### αβlabページ (`/alphabeta/`)
 

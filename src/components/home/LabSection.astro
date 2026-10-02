@@ -1,17 +1,58 @@
 ---
+import type { YouTubeVideo } from '../../data/youtube';
+
 const badgeImagePath = '/images/badges/generative-ai-passport-display.png';
 
-const tools = [
-  { name: 'Invisible-Payload-Scanner', lang: 'PowerShell', line: 'AIが書いたコードを、実行する前に疑う。', gh: 'https://github.com/ryojihido/Invisible-Payload-Scanner', note: 'https://note.com/ryojihido/n/n2be83ff161a5' },
-  { name: 'AI-Usage-Gauge', lang: 'PowerShell', line: '使いすぎを、目に見える形にする。', gh: 'https://github.com/ryojihido/AI-Usage-Gauge', note: null },
-  { name: 'PDFwiki', lang: 'Python', line: 'クソ長いPDFを、辞書みたいに引く。', gh: 'https://github.com/ryojihido/PDFwiki', note: 'https://note.com/ryojihido/n/n948ad711b091' },
-  { name: 'Discord-JP-Quick-Translate', lang: 'TypeScript', line: '英語の会話に、ワンクリックで追いつく。', gh: 'https://github.com/ryojihido/Discord-JP-Quick-Translate', note: null },
-  { name: 'rhworks-site', lang: 'Astro', line: 'このサイト自体も、その一つです。', gh: 'https://github.com/ryojihido/rhworks-site', note: null },
+interface Tool {
+  name: string;
+  lang: string;
+  line: string;
+  links: { label: string; url: string }[];
+  video?: YouTubeVideo;
+}
+
+const tools: Tool[] = [
+  {
+    name: 'On-De-Mask',
+    lang: 'Windows',
+    line: '画像を外へ送る前に、PCの中で隠す。',
+    links: [{ label: 'BOOTH', url: 'https://rhworks.booth.pm/items/8698874' }],
+    video: { id: 'td9dz_l5yZk', title: '顔も個人情報も、PCの中だけで隠す｜ローカルAI顔検出・モザイク・黒塗り【On-De-Mask / Windows】' },
+  },
+  {
+    name: 'Invisible-Payload-Scanner',
+    lang: 'PowerShell',
+    line: 'AIが書いたコードを、実行する前に疑う。',
+    links: [
+      { label: 'GitHub', url: 'https://github.com/ryojihido/Invisible-Payload-Scanner' },
+      { label: 'note', url: 'https://note.com/ryojihido/n/n2be83ff161a5' },
+    ],
+  },
+  { name: 'AI-Usage-Gauge', lang: 'PowerShell', line: '使いすぎを、目に見える形にする。', links: [{ label: 'GitHub', url: 'https://github.com/ryojihido/AI-Usage-Gauge' }] },
+  {
+    name: 'PDFwiki',
+    lang: 'Python',
+    line: 'クソ長いPDFを、辞書みたいに引く。',
+    links: [
+      { label: 'GitHub', url: 'https://github.com/ryojihido/PDFwiki' },
+      { label: 'note', url: 'https://note.com/ryojihido/n/n948ad711b091' },
+    ],
+  },
+  { name: 'Discord-JP-Quick-Translate', lang: 'TypeScript', line: '英語の会話に、ワンクリックで追いつく。', links: [{ label: 'GitHub', url: 'https://github.com/ryojihido/Discord-JP-Quick-Translate' }] },
+  { name: 'rhworks-site', lang: 'Astro', line: 'このサイト自体も、その一つです。', links: [{ label: 'GitHub', url: 'https://github.com/ryojihido/rhworks-site' }] },
 ];
 
+const membership = {
+  name: 'りょじ技研',
+  lead: '生成AIの「その先」の話をする場所。',
+  body: '生成AIのしくみと安全運用の前提を分かっている人向けの、「配慮しないメンバーシップ」です。',
+  url: 'https://note.com/ryojihido/membership',
+};
+
 const fieldNotes = [
-  { date: '2026.06.14', title: 'インドが追い越した日に、考えたこと【随想】', url: 'https://note.com/ryojihido/n/nacf97fec5678' },
-  { date: '2026.06.05', title: '生まれて初めてGASでスクリプトを組んでみた', url: 'https://note.com/ryojihido/n/n3c5318c9afca' },
+  { date: '2026.08.03', title: '朝起きたらA4一枚の作戦資料ができていた――Next Tokyo26と日本科学未来館', url: 'https://note.com/ryojihido/n/n10ae55164da7' },
+  { date: '2026.07.30', title: '災害時、AIに聞くなら。', url: 'https://note.com/ryojihido/n/n9d2a97e3483f' },
+  { date: '2026.06.27', title: 'StackChanがやってきた！ ― AIエージェントと進めた開発奮闘記録', url: 'https://note.com/ryojihido/n/n16b12634c234' },
   { date: '2026.04.24', title: 'デジタル庁が源内OSSを公開した日に、漫画家が「自分だけの行政書類係」を作った話', url: 'https://note.com/ryojihido/n/n71c402a26c1f' },
 ];
 ---
@@ -98,8 +139,8 @@ const fieldNotes = [
       ここまでは考え方の話。ここから先は、手を動かした結果です。
     </p>
 
-    <!-- GitHub tools -->
-    <div class="relative z-10 space-y-8">
+    <!-- Tools -->
+    <div class="relative z-10 space-y-8" x-data>
       <h3 class="text-[10px] font-bold tracking-[0.25em] uppercase text-brand-pink-accent/90">仕事場から生まれた道具たち</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {tools.map((tool) => (
@@ -109,10 +150,27 @@ const fieldNotes = [
               <span class="text-[9px] tracking-widest uppercase text-brand-gray/40 border border-brand-gray/15 rounded px-1.5 py-0.5">{tool.lang}</span>
             </div>
             <p class="text-xs text-brand-gray/70 leading-relaxed">{tool.line}</p>
-            <div class="flex gap-4 text-[10px] tracking-widest uppercase pt-1">
-              <a href={tool.gh} target="_blank" rel="noopener noreferrer" class="text-brand-pink-accent hover:text-brand-ink border-b border-brand-pink-accent/40">GitHub</a>
-              {tool.note && (
-                <a href={tool.note} target="_blank" rel="noopener noreferrer" class="text-brand-gray/50 hover:text-brand-ink border-b border-brand-gray/20">note</a>
+            <div class="flex flex-wrap gap-4 text-[10px] tracking-widest uppercase pt-1">
+              {tool.links.map((link, index) => (
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class:list={[
+                    'hover:text-brand-ink border-b',
+                    index === 0 ? 'text-brand-pink-accent border-brand-pink-accent/40' : 'text-brand-gray/50 border-brand-gray/20',
+                  ]}
+                >{link.label}</a>
+              ))}
+              {tool.video && (
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-1.5 uppercase tracking-widest text-brand-gray/60 hover:text-brand-ink border-b border-brand-gray/20"
+                  @click={`$dispatch('open-youtube', ${JSON.stringify(tool.video)})`}
+                >
+                  <svg class="h-2.5 w-2.5" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" /></svg>
+                  動画を見る
+                </button>
               )}
             </div>
           </div>
@@ -129,15 +187,29 @@ const fieldNotes = [
     <div class="space-y-6">
       <h3 class="text-[10px] font-bold tracking-[0.25em] uppercase text-brand-pink-accent/90">記録 / Field Notes</h3>
 
-      <a
-        href="https://note.com/ryojihido/n/n7d30b0221e47"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="block rounded-xl border border-brand-pink-accent/30 bg-white p-5 hover:border-brand-pink-accent/60 transition-colors"
-      >
-        <span class="text-[9px] font-bold tracking-widest uppercase text-brand-pink-accent">Pinned</span>
-        <p class="mt-2 text-sm text-brand-ink leading-relaxed">「何に使わないか」から決める：商業制作3年間の生成AI実務記録（ダイジェスト版）</p>
-      </a>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a
+          href="https://note.com/ryojihido/n/n7d30b0221e47"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block rounded-xl border border-brand-pink-accent/30 bg-white p-5 hover:border-brand-pink-accent/60 transition-colors"
+        >
+          <span class="text-[9px] font-bold tracking-widest uppercase text-brand-pink-accent">Pinned</span>
+          <p class="mt-2 text-sm text-brand-ink leading-relaxed">「何に使わないか」から決める：商業制作3年間の生成AI実務記録（ダイジェスト版）</p>
+        </a>
+
+        <a
+          href={membership.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group block rounded-xl bg-brand-ink p-5 text-brand-beige hover:-translate-y-0.5 hover:shadow-lg transition-all"
+        >
+          <span class="text-[9px] font-bold tracking-widest uppercase text-brand-pink-accent">Membership</span>
+          <p class="mt-2 text-base font-bold">{membership.name}</p>
+          <p class="mt-2 text-xs leading-relaxed text-brand-beige/75">{membership.lead}{membership.body}</p>
+          <span class="mt-3 inline-block text-[10px] tracking-widest uppercase border-b border-brand-pink-accent/50 group-hover:text-brand-pink-accent">noteで見る</span>
+        </a>
+      </div>
 
       <ul class="space-y-3 text-sm">
         {fieldNotes.map((note) => (

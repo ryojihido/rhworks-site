@@ -1,0 +1,71 @@
+---
+// ページ内のどこからでも $dispatch('open-youtube', { id, title }) で開く、YouTube 再生用のウインドウ。
+// iframe は開いている間だけ作るので、ページを開いた時点では YouTube を読み込まない。
+---
+
+<div
+  x-data="youtubeLightbox()"
+  @open-youtube.window="openVideo($event.detail)"
+  @keydown.escape.window="closeVideo()"
+>
+  <div
+    x-show="lightboxVideo"
+    x-transition.opacity.duration.200ms
+    class="fixed inset-0 z-[70] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm md:p-10"
+    role="dialog"
+    aria-modal="true"
+    :aria-label="lightboxVideo?.title"
+    @click.self="closeVideo()"
+    style="display: none;"
+  >
+    <div class="w-full max-w-5xl">
+      <div class="mb-3 flex items-center justify-between gap-4 text-brand-beige">
+        <p class="truncate font-serif text-sm" x-text="lightboxVideo?.title"></p>
+        <button
+          type="button"
+          class="shrink-0 rounded-full border border-white/20 p-2 hover:bg-white/10"
+          x-ref="lightboxClose"
+          @click="closeVideo()"
+          aria-label="動画を閉じる"
+        >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="aspect-video w-full overflow-hidden rounded-xl bg-black">
+        <template x-if="lightboxVideo">
+          <iframe
+            class="h-full w-full"
+            :src="embedSrc"
+            :title="lightboxVideo.title"
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener('alpine:init', () => {
+    window.Alpine.data('youtubeLightbox', () => ({
+      lightboxVideo: null,
+      returnFocusTo: null,
+      async openVideo(video) {
+        this.returnFocusTo = document.activeElement;
+        this.lightboxVideo = video;
+        await this.$nextTick();
+        this.$refs.lightboxClose.focus();
+      },
+      closeVideo() {
+        if (!this.lightboxVideo) return;
+        this.lightboxVideo = null;
+        this.returnFocusTo.focus();
+      },
+      get embedSrc() {
+        return `https://www.youtube-nocookie.com/embed/${this.lightboxVideo.id}?autoplay=1&rel=0`;
+      },
+    }));
+  });
+</script>

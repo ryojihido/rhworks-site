@@ -1,12 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/home/Hero.astro';
+import NowShowingBand from '../components/home/NowShowingBand.astro';
 import WorksSection from '../components/home/WorksSection.astro';
-import VideosSection from '../components/home/VideosSection.astro';
 import ProfileSection from '../components/home/ProfileSection.astro';
 import LabSection from '../components/home/LabSection.astro';
 import AlphabetaBridge from '../components/home/AlphabetaBridge.astro';
 import ContactSection from '../components/home/ContactSection.astro';
+import YouTubeLightbox from '../components/YouTubeLightbox.astro';
 ---
 
 <Layout
@@ -20,11 +21,11 @@ import ContactSection from '../components/home/ContactSection.astro';
 
     <main class="max-w-5xl mx-auto px-6 md:px-10 relative z-10">
       <Hero />
+      <NowShowingBand />
       <WorksSection />
       <ProfileSection />
       <LabSection />
       <AlphabetaBridge />
-      <VideosSection />
       <ContactSection />
 
       <footer class="pt-10 pb-16 border-t border-brand-gray/10 text-center">
@@ -32,6 +33,7 @@ import ContactSection from '../components/home/ContactSection.astro';
       </footer>
     </main>
   </div>
+  <YouTubeLightbox />
 </Layout>
 
 <style>

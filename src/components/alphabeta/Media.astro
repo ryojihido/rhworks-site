@@ -1,6 +1,7 @@
 ---
 const videos = [
-  { id: 'CHuxTm6zLvg', title: 'αβlabプロモテストムービー' }
+  { id: 'CHuxTm6zLvg', title: 'αβlabプロモテストムービー' },
+  { id: 'yBdtjJtFbuA', title: '「ノイズより少しやさしく」lyricmotion ver.' },
 ];
 
 const novelSeries = {
@@ -30,6 +31,7 @@ const novelSeries = {
                     class="absolute inset-0 w-full h-full"
                     src={`https://www.youtube.com/embed/${video.id}`}
                     title={video.title}
+                    loading="lazy"
                     frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                     referrerpolicy="strict-origin-when-cross-origin" 
