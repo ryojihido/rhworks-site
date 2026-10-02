@@ -30,5 +30,8 @@ Thumbs.db
 AI_GUIDELINES.md
 DEPLOY_CHECKLIST.md
 
+# Claude Code per-machine settings (permission allowlists can hold local paths or command strings)
+.claude/settings.local.json
+
 # local exports of verifiable badges should not be published by default
 public/images/badges/Openバッヂ*.png
